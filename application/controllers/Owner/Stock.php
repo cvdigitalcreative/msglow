@@ -93,7 +93,7 @@
 	  		if($this->session->userdata('akses') == 1 && $this->session->userdata('masuk') == true){
 	  			$y['title'] = "Stock Masuk";
 	  			$x['stock'] = $this->M_history_stock_barang_masuk->getHistoryStock_all();
-	  			$x['nonreseller'] = $this->m_barang->getDataNonReseller1();
+	  			$x['nonreseller'] = $this->m_barang->getDataNonReseller11();
 		       	$this->load->view('v_header',$y);
 		       	$this->load->view('owner/v_sidebar');
 		       	$this->load->view('owner/v_stock_masuk',$x);
@@ -123,7 +123,7 @@
 			 
 	  			$y['title'] = "Stock Masuk dari ".$dari." sampai ".$ke;
 	  			$x['stock'] = $this->M_history_stock_barang_masuk->getHistoryStock_all_by_tanggal_filter($dari,$ke);
-	  			$x['nonreseller'] = $this->m_barang->getDataNonReseller1();
+	  			$x['nonreseller'] = $this->m_barang->getDataNonReseller11();
                $this->load->view('v_header',$y);
 		       	$this->load->view('owner/v_sidebar');
 		       	$this->load->view('owner/v_stock_masuk',$x);
@@ -137,7 +137,7 @@
 	  		if($this->session->userdata('akses') == 1 && $this->session->userdata('masuk') == true){
 	  			$y['title'] = "Stock Kembali";
 	  			$x['stock'] = $this->M_history_stock_barang_kembali->getHistoryStock_all();
-	  			$x['nonreseller'] = $this->m_barang->getDataNonReseller1();
+	  			$x['nonreseller'] = $this->m_barang->getDataNonReseller11();
 		       	$this->load->view('v_header',$y);
 		       	$this->load->view('owner/v_sidebar');
 		       	$this->load->view('owner/v_stock_kembali',$x);
@@ -168,7 +168,7 @@
 			 
 	  			$y['title'] = "Stock Kembali dari ".$dari." sampai ".$ke;
 	  			$x['stock'] = $this->M_history_stock_barang_kembali->getHistoryStock_all_by_tanggal_filter($dari,$ke);
-	  			$x['nonreseller'] = $this->m_barang->getDataNonReseller1();
+	  			$x['nonreseller'] = $this->m_barang->getDataNonReseller11();
                $this->load->view('v_header',$y);
 		       	$this->load->view('owner/v_sidebar');
 		       	$this->load->view('owner/v_stock_kembali',$x);
