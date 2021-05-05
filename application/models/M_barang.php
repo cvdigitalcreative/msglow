@@ -99,11 +99,11 @@
 		}
 
 		function getAllBarang(){
-			$hasil=$this->db->query("SELECT barang.*,DATE_FORMAT(barang_tanggal,'%d/%m/%Y %H:%i') AS tanggal FROM barang ORDER BY barang_nama");
+			$hasil=$this->db->query("SELECT barang.*,DATE_FORMAT(barang_tanggal,'%d/%m/%Y %H:%i') AS tanggal FROM barang where barang_stock_akhir>0  ORDER BY barang_nama");
         	return $hasil;
 		}
 		function getAllBarangR(){
-			$hasil=$this->db->query("SELECT barang.*,DATE_FORMAT(barang_tanggal,'%d/%m/%Y %H:%i') AS tanggal FROM barang ORDER BY barang_nama");
+			$hasil=$this->db->query("SELECT barang.*,DATE_FORMAT(barang_tanggal,'%d/%m/%Y %H:%i') AS tanggal FROM barang where barang_stock_akhir>0 ORDER BY barang_nama");
         	return $hasil;
 		}
 
@@ -113,7 +113,7 @@
 		}
 
 		function getDataNonReseller1(){
-			$hasil=$this->db->query("SELECT a.*,DATE_FORMAT(barang_tanggal,'%d/%m/%Y %H:%i') AS tanggal FROM barang a WHERE barang_level = 2");
+			$hasil=$this->db->query("SELECT a.*,DATE_FORMAT(barang_tanggal,'%d/%m/%Y %H:%i') AS tanggal FROM barang a WHERE barang_level = 2 and  a.barang_stock_akhir>0");
         	return $hasil;
 		}
 
