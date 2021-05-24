@@ -214,7 +214,15 @@
   $(document).ready(function(){
     // Format mata uang.
     $( '.money' ).mask('000.000.000.000.000', {reverse: true});
-
+    $('#datatable').dataTable( {
+      "scrollX": true,
+      "scrollY": "200px",
+      "scrollCollapse": true,
+      "paging": false,
+       "serverSide": true,
+        "deferRender": true,
+       "orderClasses": false
+    } );
   })
 </script>
 

@@ -78,48 +78,7 @@
                       $mp_nama = $i['mp_nama'];
                       $at_nama = $i['at_nama'];
                       $user_nama = $i['user_nama'];
-                      if($level == 1){
-                        $q=$this->db->query("SELECT SUM(a.lb_qty * d.br_harga) AS total_keseluruhan, ((SUM(a.lb_qty * d.br_harga))-SUM(a.lb_qty * c.barang_harga_modal)) AS total FROM list_barang a, pemesanan b, barang c, barang_reseller d WHERE a.pemesanan_id = '$pemesanan_id' AND a.ktg_qty = d.br_kuantitas AND a.pemesanan_id = b.pemesanan_id AND a.barang_id = c.barang_id AND a.barang_id = d.barang_id"); 
-                        $c=$q->row_array();
-                        $omset = $c['total_keseluruhan'];
-                        $untung = $c['total'];
-                           //diskon pemesanan
-                        $z=$this->db->query("SELECT b.potongan_harga   FROM pemesanan a, diskon_all b WHERE a.pemesanan_id = '$pemesanan_id' and a.id_diskon=b.id ");
-                        $c=$z->row_array();
-                        $potongan_harga = $c['potongan_harga'];
-                        $omset=$omset-($potongan_harga);
-                        $untung = $untung-($potongan_harga);
-                      }elseif($level == 2){
-                        $q=$this->db->query("SELECT SUM(a.lb_qty * d.bnr_harga) AS total_keseluruhan, (SUM(a.lb_qty * d.bnr_harga))-(SUM(a.lb_qty * c.barang_harga_modal)) AS total FROM list_barang a, pemesanan b, barang c, barang_non_reseller d WHERE a.pemesanan_id = '$pemesanan_id' AND a.pemesanan_id = b.pemesanan_id AND a.barang_id = c.barang_id AND a.barang_id = d.barang_id");
-                        $c=$q->row_array();
-                        $omset = $c['total_keseluruhan'];
-                        $untung = $c['total'];
-                        //diskon
-                      $z=$this->db->query("SELECT a.lb_qty ,a.barang_id,b.pemesanan_tanggal  FROM list_barang a, pemesanan b, barang c, barang_non_reseller d WHERE a.pemesanan_id = '$pemesanan_id' AND lb_lvl =2 AND a.pemesanan_id = b.pemesanan_id AND a.barang_id = c.barang_id AND a.barang_id = d.barang_id ORDER BY lb_id");
-                        foreach ($z->result_array() as $i ) {
-                                 $barang_id = $i['barang_id'];
-                                 $lb_qty = $i['lb_qty'];
-                                 $pemesanan_tanggal = $i['pemesanan_tanggal'];
-                                  $z=$this->db->query("select potongan_harga from diskon where barang_id='$barang_id' and  tanggal_mulai <= '$pemesanan_tanggal' AND tanggal_berakhir >= '$pemesanan_tanggal'")->row_array();
-
-
-                                  if($z['potongan_harga']==null){
-                                    
-                                  }else{
-                                    $untung=$untung-($z['potongan_harga']*$lb_qty);
-                                    $omset=$omset-($z['potongan_harga']*$lb_qty);
-                                  }
-
-                        }
-                        //--------
-                         //diskon pemesanan
-                           //diskon pemesanan
-                        $z=$this->db->query("SELECT b.potongan_harga   FROM pemesanan a, diskon_all b WHERE a.pemesanan_id = '$pemesanan_id' and a.id_diskon=b.id ");
-                        $c=$z->row_array();
-                        $potongan_harga = $c['potongan_harga'];
-                        $omset=$omset-($potongan_harga);
-                        $untung = $untung-($potongan_harga);
-                      }
+                      
 
                       
                   ?>
@@ -134,36 +93,10 @@
                       <td><?php echo $mp_nama?></td>
                        <td><?php echo $user_nama?></td>
                       <td style="word-break: break-all;">
-                        <?php
-                           if($level==1){
-
-                               $z=$this->db->query("SELECT a.lb_id,a.pemesanan_id,a.lb_qty,a.barang_id,b.pemesanan_nama,c.barang_nama,d.br_harga, a.lb_qty * d.br_harga AS total FROM list_barang a, pemesanan b, barang c, barang_reseller d WHERE b.pemesanan_id = '$pemesanan_id' AND a.ktg_qty = d.br_kuantitas AND a.pemesanan_id = b.pemesanan_id AND a.barang_id = c.barang_id AND a.barang_id = d.barang_id");
-
-                                foreach ($z->result_array() as $i ) {
-                                  $barang_nama = $i['barang_nama'];
-                                   $jumlah_barang = $i['lb_qty'];
-                                   echo "- ".$barang_nama."=  ".$jumlah_barang."<br>";
-                                }
-
-                          }else  if($level==2){
-                               $z=$this->db->query("SELECT a.lb_id,a.pemesanan_id,a.lb_qty,a.barang_id,b.pemesanan_nama,c.barang_nama,d.bnr_harga, a.lb_qty * d.bnr_harga AS total FROM list_barang a, pemesanan b, barang c, barang_non_reseller d WHERE a.pemesanan_id = '$pemesanan_id' AND lb_lvl =2 AND a.pemesanan_id = b.pemesanan_id AND a.barang_id = c.barang_id AND a.barang_id = d.barang_id ORDER BY lb_id");
-                               
-                                foreach ($z->result_array() as $i ) {
-
-                                    $barang_nama = $i['barang_nama'];
-
-                                     $jumlah_barang = $i['lb_qty'];
-                                   echo "- ".$barang_nama."=  ".$jumlah_barang."<br>";
-
-                                  }
-                          }
-                         
-                          
-                          
-                        ?>
+                       <?php echo $barang_all[$no-1]?>
                       </td>
-                      <td><?php echo rupiah($omset)?></td>
-                      <td><?php echo rupiah($untung)?></td>
+                      <td><?php echo rupiah($omset[$no-1])?></td>
+                      <td><?php echo rupiah($untung[$no-1])?></td>
                     </tr>
                   <?php endforeach;?>
               </tbody>
@@ -275,7 +208,7 @@
 
 
              <!-- Modal edit Data -->
-      <?php if($level1 == 0) :?>
+     
                 
 
                <div class="modal" tabindex="-1" role="dialog" id="cetak_tanggal">
@@ -285,83 +218,13 @@
                         <h5 class="modal-title">Pilih tanggal</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
-                    
+                     <?php if($level1 == 0) :?>
                     <form action="<?= base_url()?>Owner/Transaksi/cetak_transaksiTanggal/0" method="post" enctype="multipart/form-data">
-                       
-                        
-                           
-                    <div class="modal-body p-20">
-                            <div class="row">
-                               <div class="col-md-6">
-                                      <label class="control-label">Dari Tanggal*</label>
-                                      <input class="form-control form-white" type="date" name="daritgl" required/>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <label class="control-label">Ke Tanggal*</label>
-                                      <input class="form-control form-white" type="date" name="ketgl" required/>
-                                  </div>
-                            </div>          
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger ripple" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success ripple save-category" id="simpan">Cari</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-              
-              <?php elseif($level1 == 1) :?>
-             
-               
-              <div class="modal" tabindex="-1" role="dialog" id="cetak_tanggal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Pilih tanggal</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    
-                    <form action="<?= base_url()?>Owner/Transaksi/cetak_transaksiTanggal/1" method="post" enctype="multipart/form-data">
-                       
-                        
-                           
-                    <div class="modal-body p-20">
-                            <div class="row">
-                               <div class="col-md-6">
-                                      <label class="control-label">Dari Tanggal*</label>
-                                      <input class="form-control form-white" type="date" name="daritgl" required/>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <label class="control-label">Ke Tanggal*</label>
-                                      <input class="form-control form-white" type="date" name="ketgl" required/>
-                                  </div>
-                            </div>          
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger ripple" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success ripple save-category" id="simpan">Cari</button>
-                    </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-            <?php elseif($level1 == 2) :?>
-             
-                
-              <div class="modal" tabindex="-1" role="dialog" id="cetak_tanggal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Pilih tanggal</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    </div>
-                    
+                     <?php elseif($level1 == 1) :?>
+                          <form action="<?= base_url()?>Owner/Transaksi/cetak_transaksiTanggal/1" method="post" enctype="multipart/form-data">
+                       <?php elseif($level1 == 2) :?>
                     <form action="<?= base_url()?>Owner/Transaksi/cetak_transaksiTanggal/2" method="post" enctype="multipart/form-data">
-                       
-                        
-                           
+                     <?php endif;?>
                     <div class="modal-body p-20">
                             <div class="row">
                                <div class="col-md-6">
@@ -381,12 +244,7 @@
                     </form>
                 </div>
             </div>
-        </div>
-              
-            <?php endif;?>
-            
-         
-        
+        </div>      
   </div>
   
 
@@ -394,26 +252,8 @@
 <!--=================================
  footer -->
  
-    <footer class="bg-white p-4">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="text-center text-md-left">
-              <p class="mb-0"> &copy; Copyright <span id="copyright"> <script>document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))</script></span>. <a href="#"> Webmin </a> All Rights Reserved. </p>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <ul class="text-center text-md-right">
-            <li class="list-inline-item"><a href="#">Terms & Conditions </a> </li>
-            <li class="list-inline-item"><a href="#">API Use Policy </a> </li>
-            <li class="list-inline-item"><a href="#">Privacy Policy </a> </li>
-          </ul>
-        </div>
-      </div>
-    </footer>
-    </div> 
-  </div>
-</div>
-</div>
+  
+
 
 <!--=================================
  footer -->
