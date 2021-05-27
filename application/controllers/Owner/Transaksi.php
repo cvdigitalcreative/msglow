@@ -22,7 +22,6 @@
 		       $y['url'] = base_url()."Owner/Transaksi";
 		       $x['datapesanan']  = $this->M_pemesanan_new->getPemesanan_fix();
 		    	$x['asal_transaksi'] = $this->M_pemesanan_new->getAllAT();
-		       
 		       $x['toko'] = $this->M_pemesanan_new->getAlltoko();
 		       $x['admin'] = $this->M_pemesanan_new->getAlladmin();
 		       $x['metode_pembayaran'] = $this->M_pemesanan_new->getAllMetpem();

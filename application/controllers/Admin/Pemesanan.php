@@ -14,7 +14,9 @@
 		    };
 
 		    $this->load->model('m_pemesanan');
+		     $this->load->model('m_pemesanan_new');
 		    $this->load->model('m_barang');
+		    $this->load->model('m_barang_new');
 		    $this->load->model('m_list_barang');
 		    $this->load->model('m_diskon');
 		    $this->load->library('upload');
@@ -23,111 +25,111 @@
 	  	function home($level){
 	  		if($this->session->userdata('akses') == 2 && $this->session->userdata('masuk') == true){
 	  			$uid=$this->session->userdata('id');
-		       $y['title'] = "Pemesanan";
-		       $x['level1'] = $level;
+		      	$id_toko=$this->session->userdata('id_toko');
+		      
+		      if($level==1){
+		      	$y['title'] = "Reseller";
+		      	$y['home_url'] = base_url()."Admin/Pemesanan/Home/1";
+		       	$y['url'] = base_url()."Admin/Pemesanan/Home/1";
+		      } else{
+		      	$y['title'] = "Customer";
+		      	$y['home_url'] = base_url()."Admin/Pemesanan/Home/2";
+		       $y['url'] = base_url()."Admin/Pemesanan/Home/2";
+		      }
+		      date_default_timezone_set("Asia/Jakarta");
+        		$tanggal = date("Y-m-d");
+		       $x['level'] = $level;
 		       $x['asal_transaksi'] = $this->m_pemesanan->getAllAT();
 		       $x['kurir'] = $this->m_pemesanan->getAllkurir();
 		       $x['metode_pembayaran'] = $this->m_pemesanan->getAllMetpem();
-		       $x['nonreseller'] = $this->m_barang->getDataNonReseller1();
-		       $x['reseller'] = $this->m_barang->getAllBarangR();
-		       
+		       $x['barang'] = $this->m_barang_new->get_barang_by_level_toko($level,$id_toko);
 		        $x['diskon'] = $this->m_diskon->getDataDiskon_pemesanan();
-		        if($uid==11){
-		        	 $x['datapesanan'] = $this->m_pemesanan->getPemesananCurdate1($level);
-		       		$a = $this->m_pemesanan->getPemesananCurdate1($level);
-		        }else{
-		        	 $x['datapesanan'] = $this->m_pemesanan->getPemesananCurdate1_by_id($level,$uid);
-		       		$a = $this->m_pemesanan->getPemesananCurdate1_by_id($level,$uid);
-		        }
 		       
-		        
-		       $total_o = 0;
-		       foreach ($a->result_array() as $i) {
-		       	$pemesanan_id = $i['pemesanan_id'];
-		       	$level = $i['level'];
-		       	if($level == 1){
-		       		$t = $this->db->query("SELECT SUM(a.lb_qty * d.br_harga) AS total_omset, (SUM(a.lb_qty * d.br_harga))-(SUM(a.lb_qty * c.barang_harga_modal)) AS total_untung FROM list_barang a, pemesanan b, barang c, barang_reseller d WHERE b.pemesanan_id = '$pemesanan_id' AND a.ktg_qty = d.br_kuantitas AND a.pemesanan_id = b.pemesanan_id AND a.barang_id = c.barang_id AND a.barang_id = d.barang_id");
-              		$d=$t->row_array();
-               		$total_omset = $d['total_omset'];
-               		 //diskon pemesanan
-                        $z=$this->db->query("SELECT b.potongan_harga   FROM pemesanan a, diskon_all b WHERE a.pemesanan_id = '$pemesanan_id' and a.id_diskon=b.id ");
-                        $c=$z->row_array();
-                        $potongan_harga = $c['potongan_harga'];
-                        $total_omset=$total_omset-($potongan_harga);
-		       	}elseif($level == 2){
-		       		$t = $this->db->query("SELECT SUM(a.lb_qty * d.bnr_harga) AS total_omset, (SUM(a.lb_qty * d.bnr_harga))-(SUM(a.lb_qty * c.barang_harga_modal)) AS total_untung FROM list_barang a, pemesanan b, barang c, barang_non_reseller d WHERE b.pemesanan_id = '$pemesanan_id' AND a.pemesanan_id = b.pemesanan_id AND a.barang_id = c.barang_id AND a.barang_id = d.barang_id");
-              		$d=$t->row_array();
-               		$total_untung = $d['total_untung'];
-               		$total_omset = $d['total_omset'];
-               		//diskon
-              			  $z=$this->db->query("SELECT a.lb_qty ,a.barang_id,b.pemesanan_tanggal  FROM list_barang a, pemesanan b, barang c, barang_non_reseller d WHERE a.pemesanan_id = '$pemesanan_id' AND lb_lvl =2 AND a.pemesanan_id = b.pemesanan_id AND a.barang_id = c.barang_id AND a.barang_id = d.barang_id ORDER BY lb_id");
-                        foreach ($z->result_array() as $i ) {
-                                 $barang_id = $i['barang_id'];
-                                 $lb_qty = $i['lb_qty'];
-                                 $pemesanan_tanggal = $i['pemesanan_tanggal'];
-                                 $z=$this->db->query("select potongan_harga from diskon where barang_id='$barang_id' and  tanggal_mulai <= '$pemesanan_tanggal' AND tanggal_berakhir >= '$pemesanan_tanggal'")->row_array();
-                                 
-                                  if($z['potongan_harga']==null){
-                                  	
-                                  }else{
-                                  	$total_untung=$total_untung-($z['potongan_harga']*$lb_qty);
-                                  	$total_omset=$total_omset-($z['potongan_harga']*$lb_qty);
-                                  }
 
-                        }
-                        //diskon pemesanan
-                        $z=$this->db->query("SELECT b.potongan_harga   FROM pemesanan a, diskon_all b WHERE a.pemesanan_id = '$pemesanan_id' and a.id_diskon=b.id ");
-                        $c=$z->row_array();
-                        $potongan_harga = $c['potongan_harga'];
-                        $total_omset=$total_omset-($potongan_harga);
-                        $total_untung=$total_untung-($potongan_harga);
-		       	}
+		       	$x['admin'] = $this->m_pemesanan_new->getAlladmin();
+		         $x['datapesanan'] = $this->m_pemesanan_new->getPemesanan_fix_admin($level,$id_toko,$tanggal,$uid);
 
-		       		$total_o = $total_o + $total_omset;
-		       }
-		       
-              
-               $total_om = $total_o;
-               $x['total_omset'] = $total_om;
-		       $a = $this->m_pemesanan->SUMNR()->row_array();
- 	  		   $x['jumlah_nr'] = $a['total_keseluruhan'];
+		       $x['total']  = $this->m_pemesanan_new->getPemesanan_sum_fix($level,$id_toko,$tanggal,$uid)->result_array();
 		       $this->load->view('v_header',$y);
 		       $this->load->view('admin/v_sidebar');
-		       $this->load->view('admin/v_pemesanan',$x);
+		       $this->load->view('admin/new_version/v_pemesanan',$x);
 		    }
 		    else{
 		       redirect('Login');
 		    }
 	  	}
 
-	  	function savepemesananNR(){	
+	  	function savepemesanan(){	
 	  		$uid=$this->session->userdata('id');
+	  		$id_toko=$this->session->userdata('id_toko');
 	  		$nama_pemesan = $this->input->post('nama_pemesan');
 	  		$no_hp = $this->input->post('hp');
 	  		$alamat = $this->input->post('alamat');
-	  		$asal_transaksi = $this->input->post('at');
-	  		$kurir = $this->input->post('kurir');
+	  		$at_id = $this->input->post('at');
+	  		$kurir_id = $this->input->post('kurir');
 	  		$tanggal = $this->input->post('tanggal');
-	  		$metpem = $this->input->post('metpem');
-	  		$level = 2;
+	  		$mp_id = $this->input->post('metpem');
+	  		$level = $this->input->post('level');;
 	  		$barang_id = $this->input->post('barang');
 	  		$qty = $this->input->post('qty');
-	  		$diskon = $this->input->post('diskon');
-	  		$this->m_pemesanan->save_pesanan($nama_pemesan,$tanggal,$no_hp,$alamat,$level,$kurir,$asal_transaksi,$metpem,$diskon,$uid);
-			$x=$this->m_pemesanan->getIdbyName($nama_pemesan);
-			$z=$x->row_array();
-			$pemesanan_id=$z['pemesanan_id'];
-
+	  		$id_diskon = $this->input->post('diskon');
+	  		$id_pegawai = $this->input->post('admin');
+	  		$id_pemesan=uniqid();
+	  		$this->m_pemesanan_new->save_pesanan($nama_pemesan,$tanggal,$no_hp,$alamat,$level,$kurir_id,$at_id,$mp_id,$id_diskon,$uid,$id_pegawai,$id_toko,$id_pemesan);
 	  		$size = sizeof($barang_id);
-          
-                for($i=0; $i < $size; $i++){
-	  			$this->m_list_barang->save_list_barang($pemesanan_id,$qty[$i],$barang_id[$i],$level);
-	  		    }
-          
-	  		
+	  		$list_barang="";
+	  		$ktg_qty=0;
 
+	  		if($level==1){
+	  			$kategori_id_all=array();
+		  		$qty_barang_all=array();
+		  		for($i=0; $i < $size; $i++){
+		  			$kategori_id=$this->m_barang_new->get_kategori_id_barang($barang_id[$i],$id_toko)[0]['id_kategori'];
+		  			array_push($kategori_id_all,$kategori_id);
+		  			array_push($qty_barang_all,$qty[$i]);
+		  			// $this->m_list_barang->save_list_barang($pemesanan_id,$qty[$i],$barang_id[$i],$level);
+		  		}
+
+	  			$total_qty_barang_all=array();
+		  		for($i=0; $i<sizeof($kategori_id_all); $i++){
+		  			if($kategori_id_all[$i]==0){
+		  				array_push($total_qty_barang_all,$qty[$i]);
+		  			}else{
+		  				$qty_totals=$qty_barang_all[$i];
+		  				for($j=0; $j<sizeof($kategori_id_all); $j++){
+		  					if($i!=$j){
+		  						if($kategori_id_all[$i]==$kategori_id_all[$j]){
+		  							$qty_totals=$qty_totals+$qty_barang_all[$j];
+		  						}
+		  					}
+		  				}
+		  				array_push($total_qty_barang_all,$qty_totals);
+		  			}
+	  			}
+	  		}
+	  		$harga_modal=0;
+	  		$harga_jual=0;
+	  		$diskon_barang=0;
+            for($i=0; $i < $size; $i++){
+	  			$this->m_barang_new->save_list_barang($id_pemesan,$qty[$i],$barang_id[$i],$level,$id_toko,$total_qty_barang_all[$i]);
+
+	  			$temp=$this->m_barang_new->get_barang_by_id($barang_id[$i],$id_toko,$level,$total_qty_barang_all[$i])->row_array();
+	  			$temp_list=" - ".$temp['barang_nama']." = ".$qty[$i]." pcs ";
+	  			$list_barang=$list_barang.$temp_list;
+	  			$harga_modal=$harga_modal+$temp['harga_modal'];
+	  			$harga_jual=$harga_jual+$temp['harga_jual'];
+	  			$temp=$this->m_diskon->get_potongan_harga_barang($barang_id[$i])->row_array();
+	  			$diskon_barang=$temp['potongan_harga']+$diskon_barang;
+
+	  		}
+	  		$diskon_pesanan=0;
+	  		$temp=$this->m_diskon->get_potongan_harga($id_diskon)->row_array();
+	  		$diskon_pesanan=$temp['potongan_harga'];
+	  		$total_untung=$harga_jual-$harga_modal;
+	  		$this->m_pemesanan_new->save_detail_pesanan($id_pemesan,$harga_jual,$total_untung,$list_barang,$diskon_pesanan,$diskon_barang,$harga_modal);
 	  		echo $this->session->set_flashdata('msg','success');
-	       	redirect('Admin/Pemesanan/Home/2');		  	
+
+	       	redirect('Admin/Pemesanan/Home/'.$level);		  	
  	  	}
 
  	  	function tambahpesananNR(){

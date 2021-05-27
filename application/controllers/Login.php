@@ -35,9 +35,11 @@ class Login extends CI_Controller{
                 $id=$xcadmin['user_id'];
                 $user_nama=$xcadmin['user_nama'];
                 $user_hp=$xcadmin['user_hp'];
+                $id_toko=$xcadmin['user_toko'];
                 $this->session->set_userdata('hp',$user_hp);
                 $this->session->set_userdata('id',$id);
                 $this->session->set_userdata('nama',$user_nama);
+                $this->session->set_userdata('id_toko',$id_toko);
                 redirect('Admin/Pemesanan/Home/1');
              } //Front Office 
         }
