@@ -254,25 +254,26 @@
 	  //      	redirect('Admin/Pemesanan/Home/1');	  	
  	 //  	}
 
- 	  // 	function edit_pesanan(){
- 	  // 		$pemesanan_id = $this->input->post('pemesanan_id');
- 	  // 		$nama_pemesan = $this->input->post('nama_pemesan');
-	  	// 	$no_hp = $this->input->post('hp');
-	  	// 	$alamat = $this->input->post('alamat');
-	  	// 	$asal_transaksi = $this->input->post('at');
-	  	// 	$kurir = $this->input->post('kurir');
-	  	// 	$metode_pembayaran = $this->input->post('mp');
-	  	// 	$diskon = $this->input->post('diskon');
-	  	// 	// $tanggal = $this->input->post('tanggal');
+ 	  	function edit_pesanan(){
+ 	  		$pemesanan_id = $this->input->post('pemesanan_id');
+ 	  		$nama_pemesan = $this->input->post('nama_pemesan');
+	  		$no_hp = $this->input->post('hp');
+	  		$alamat = $this->input->post('alamat');
+	  		$asal_transaksi = $this->input->post('at');
+	  		$kurir = $this->input->post('kurir');
+	  		$metode_pembayaran = $this->input->post('metpem');
+	  		$admin = $this->input->post('admin');
+	  		// $tanggal = $this->input->post('tanggal');
 
-	  	// 	$this->m_pemesanan->edit_pesanan($pemesanan_id,$nama_pemesan,$no_hp,$alamat,$kurir,$asal_transaksi,$metode_pembayaran,$diskon);
-	  	// 	echo $this->session->set_flashdata('msg','update');
-	   //     	redirect($this->agent->referrer());	
-	  	// }
+	  		$this->m_pemesanan_new->edit_pesanan($pemesanan_id,$nama_pemesan,$no_hp,$alamat,$kurir,$asal_transaksi,$metode_pembayaran,$admin);
+	  		echo $this->session->set_flashdata('msg','update');
+	       	redirect($this->agent->referrer());	
+	  	}
 
 	  	function hapus_pesanan(){
 	  		$pemesanan_id = $this->input->post('pemesanan_id');
-	  		$this->m_pemesanan->hapus_pesanan($pemesanan_id);
+	  		$id_toko=$this->session->userdata('id_toko');
+	  		$this->m_pemesanan_new->hapus_pesanan($pemesanan_id,$id_toko);
 	  		echo $this->session->set_flashdata('msg','hapus');
 	       	redirect($this->agent->referrer());	
 	  	}
