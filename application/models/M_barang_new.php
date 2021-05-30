@@ -4,6 +4,15 @@
 	 */
 	class M_barang_new extends CI_Model
 	{
+		function get_all_barang_by_toko($id_toko){
+			$hasil=$this->db->query("SELECT a.*,DATE_FORMAT(barang_tanggal,'%d/%m/%Y %H:%i') AS tanggal FROM barang a WHERE  id_toko='$id_toko' ORDER BY barang_nama ");
+
+        	return $hasil;
+		}
+		function getHistoryStock($barang_id,$id_toko){
+			$hasil=$this->db->query("SELECT a.lb_id,c.pemesanan_nama,a.lb_qty as stock_berkurang,a.barang_id,b.barang_nama,DATE_FORMAT(a.lb_tanggal,'%d/%m/%Y %H:%i') AS tanggal FROM list_barang a,barang b, pemesanan c WHERE a.barang_id = '$barang_id' and  a.id_toko = '$id_toko' AND a.barang_id = b.barang_id AND a.pemesanan_id = c.pemesanan_id  ORDER BY `a`.`lb_id` DESC");
+        	return $hasil;
+		}
 		function get_barang_by_level_toko($level,$id_toko){
 			$hasil=$this->db->query("SELECT a.*,DATE_FORMAT(barang_tanggal,'%d/%m/%Y %H:%i') AS tanggal FROM barang a WHERE  id_toko='$id_toko' and barang_stock_akhir>0 ORDER BY barang_nama ");
 

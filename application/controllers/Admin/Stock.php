@@ -15,6 +15,7 @@
 
 		    $this->load->model('m_pemesanan');
 		    $this->load->model('m_barang');
+		     $this->load->model('m_barang_new');
 		    $this->load->model('m_list_barang');
 		    $this->load->model('M_history_stock_barang_keluar');
 		    
@@ -25,7 +26,8 @@
 	  	function index(){
 	  		if($this->session->userdata('akses') == 2 && $this->session->userdata('masuk') == true){
 	  			$y['title'] = "Stock";
-	  			$x['stock'] = $this->m_barang->getAllBarang();
+	  			$id_toko=$this->session->userdata('id_toko');
+	  			$x['stock'] = $this->m_barang_new->get_all_barang_by_toko($id_toko);
 		       	$this->load->view('v_header',$y);
 		       	$this->load->view('admin/v_sidebar');
 		       	$this->load->view('admin/v_stock',$x);
@@ -37,7 +39,8 @@
 	  	function cetak_stok_keseluruhan(){
 	  		if($this->session->userdata('akses') == 2 && $this->session->userdata('masuk') == true){
 	  			$y['title'] = "Stock Keluar";
-	  			$x['stock'] = $this->m_barang->getAllBarang();
+	  			$id_toko=$this->session->userdata('id_toko');
+	  			$x['stock'] = $this->m_barang_new->get_all_barang_by_toko($id_toko);
 	  			$cur_date = date("Y-m-d H:i:s");
                	$x['tanggal']=$cur_date;
 		   
@@ -51,7 +54,8 @@
 	  	function stok_keluar(){
 	  		if($this->session->userdata('akses') == 2 && $this->session->userdata('masuk') == true){
 	  			$y['title'] = "Stock Keluar";
-	  			$x['stock'] = $this->M_history_stock_barang_keluar->getHistoryStock_all_by_tanggal();
+	  			$id_toko=$this->session->userdata('id_toko');
+	  			$x['stock'] = $this->M_history_stock_barang_keluar->getHistoryStock_all_by_tanggal($id_toko);
 		       	$this->load->view('v_header',$y);
 		       	$this->load->view('admin/v_sidebar');
 		       	$this->load->view('admin/v_stock_keluar',$x);
@@ -63,7 +67,8 @@
 	  	function cetak_stok_keluar(){
 	  		if($this->session->userdata('akses') == 2 && $this->session->userdata('masuk') == true){
 	  			$y['title'] = "Stock Keluar";
-	  			$x['stock'] = $this->M_history_stock_barang_keluar->getHistoryStock_all_by_tanggal();
+	  			$id_toko=$this->session->userdata('id_toko');
+	  			$x['stock'] = $this->M_history_stock_barang_keluar->getHistoryStock_all_by_tanggal($id_toko);
 	  			$cur_date = date("Y-m-d H:i:s");
                	$x['tanggal']=$cur_date;
 		   
@@ -78,7 +83,8 @@
 	  	function stok_kembali(){
 	  		if($this->session->userdata('akses') == 2 && $this->session->userdata('masuk') == true){
 	  			$y['title'] = "Stock Kembali";
-	  			$x['stock'] = $this->M_history_stock_barang_kembali->getHistoryStock_all_by_tanggal();
+	  			$id_toko=$this->session->userdata('id_toko');
+	  			$x['stock'] = $this->M_history_stock_barang_kembali->getHistoryStock_all_by_tanggal($id_toko);
 		       	$this->load->view('v_header',$y);
 		       	$this->load->view('admin/v_sidebar');
 		       	$this->load->view('admin/v_stock_kembali',$x);
@@ -90,7 +96,8 @@
 	  	function cetak_stok_kembali(){
 	  		if($this->session->userdata('akses') == 2 && $this->session->userdata('masuk') == true){
 	  			$y['title'] = "Stock Kembali";
-	  			$x['stock'] = $this->M_history_stock_barang_kembali->getHistoryStock_all_by_tanggal();
+	  			$id_toko=$this->session->userdata('id_toko');
+	  			$x['stock'] = $this->M_history_stock_barang_kembali->getHistoryStock_all_by_tanggal($id_toko);
 	  			$cur_date = date("Y-m-d H:i:s");
                	$x['tanggal']=$cur_date;
 		   
@@ -104,7 +111,8 @@
 	  	function history($barang_id){
  	  		if($this->session->userdata('akses') == 2 && $this->session->userdata('masuk') == true){
  	  			$y['title'] = "Stock";
-	 	  		   $x['stock'] = $this->m_barang->getHistoryStock($barang_id);	
+ 	  			$id_toko=$this->session->userdata('id_toko');
+	 	  		   $x['stock'] = $this->m_barang_new->getHistoryStock($barang_id,$id_toko);	
 			       $this->load->view('v_header',$y);
 			       $this->load->view('admin/v_sidebar');
 			       $this->load->view('admin/v_history_stock',$x);
