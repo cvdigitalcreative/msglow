@@ -17,10 +17,23 @@
           <div class="card card-statistics h-100"> 
              <div class="card-body">
                  <div class="col-xl-12 mb-10" style="display: flex">
+                   
                     <div class="col-md-12">
                       <a href="" data-toggle="modal" data-target="#tambahpesanan" class="btn btn-primary btn-block ripple m-t-20">
                         <i class="fa fa-plus pr-2"></i> Tambah Pemesanan <?php echo $title ?>
                       </a>
+                    </div>
+                 </div>
+                 <div class="col-xl-12 mb-10" style="display: flex">
+                   
+                    <div class="col-md-12">
+                      <form action="<?php echo base_url()?>Admin/Pemesanan/cetak_pemesanan"  method="post" enctype="multipart/form-data">
+                         <input class="" type="hidden" name="level"
+                         value="<?php echo $level ?>" />
+                        <div class="modal-footer">
+                                <button type="submit" class="btn btn-primary btn-block ripple m-t-20" name="action" value="cetak">Cetak</button>
+                        </div> 
+                      </form>
                     </div>
                  </div>
              </div>

@@ -59,6 +59,29 @@
 		    }
 	  	}
 
+	  	function cetak_pemesanan(){
+	  		$level = $this->input->post('level');
+	  		 date_default_timezone_set("Asia/Jakarta");
+        		$tanggal = date("Y-m-d");
+        		if($level==1){
+		      	$x['title'] = "Reseller";
+		      	
+		      } else{
+		      	$x['title'] = "Customer";
+		      }
+	  		if($this->session->userdata('akses') == 2 && $this->session->userdata('masuk') == true){
+	  			$uid=$this->session->userdata('id');
+		      	$id_toko=$this->session->userdata('id_toko');
+		        $x['datapesanan'] = $this->m_pemesanan_new->getPemesanan_fix_admin($level,$id_toko,$tanggal,$uid);
+		       $x['total']  = $this->m_pemesanan_new->getPemesanan_sum_fix($level,$id_toko,$tanggal,$uid)->result_array();
+		       
+		       $this->load->view('admin/new_version/v_cetak',$x);
+		    }
+		    else{
+		       redirect('Login');
+		    }
+	  	}
+
 	  	function savepemesanan(){	
 	  		$uid=$this->session->userdata('id');
 	  		$id_toko=$this->session->userdata('id_toko');
@@ -69,7 +92,7 @@
 	  		$kurir_id = $this->input->post('kurir');
 	  		$tanggal = $this->input->post('tanggal');
 	  		$mp_id = $this->input->post('metpem');
-	  		$level = $this->input->post('level');;
+	  		$level = $this->input->post('level');
 	  		$barang_id = $this->input->post('barang');
 	  		$qty = $this->input->post('qty');
 	  		$id_diskon = $this->input->post('diskon');
