@@ -16,14 +16,7 @@
         <div class="col-xl-12 mb-30"> 
           <div class="card card-statistics h-100"> 
              <div class="card-body">
-                 <div class="col-xl-12 mb-10" style="display: flex">
-                   
-                    <div class="col-md-12">
-                      <a href="" data-toggle="modal" data-target="#tambahpesanan" class="btn btn-primary btn-block ripple m-t-20">
-                        <i class="fa fa-plus pr-2"></i> Tambah Pemesanan <?php echo $title ?>
-                      </a>
-                    </div>
-                 </div>
+                 
                  <div class="col-xl-12 mb-10" style="display: flex">
                    
                     <div class="col-md-12">
@@ -31,9 +24,17 @@
                          <input class="" type="hidden" name="level"
                          value="<?php echo $level ?>" />
                         <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary btn-block ripple m-t-20" name="action" value="cetak">Cetak</button>
+                                <button type="submit" class="btn btn-primary btn-block ripple m-t-20" name="action" value="cetak">Cetak Laporan</button>
                         </div> 
                       </form>
+                    </div>
+                 </div>
+                 <div class="col-xl-12 mb-10" style="display: flex">
+                   
+                    <div class="col-md-12">
+                      <a href="" data-toggle="modal" data-target="#tambahpesanan" class="btn btn-success btn-block ripple m-t-20">
+                        <i class="fa fa-plus pr-2"></i> Tambah Pemesanan <?php echo $title ?>
+                      </a>
                     </div>
                  </div>
              </div>
@@ -58,6 +59,7 @@
             <table id="datatable" class="table table-striped table-bordered p-0">
               <thead>
                   <tr>
+                      <th width="5">Checkbox Invoice</th>
                       <th width="5">No</th>
                       <th>Nama Pemesan</th>
                       <th width="10">Tanggal Pesanan</th>
@@ -103,6 +105,11 @@
                       $omset=$i['total_omset'];
                   ?>
                     <tr>
+                      <td>
+                        <!-- <input type="checkbox" id="cetak" name="cetak" value="<?php echo $pemesanan_id?>"> -->
+                        <input type="checkbox" id="cek_<?php echo $pemesanan_id?>" onclick="myFunction('<?php echo $pemesanan_id?>')" value="<?php echo $pemesanan_id?>">
+
+                      </td>
                       <td><center><?php echo $no?></center></td>
                       <td><?php echo $pemesanan_nama?></td>
                       <td><?php echo $tanggal?></td>
@@ -245,7 +252,19 @@
 
                   <?php endforeach;?>
               </tbody>
+
            </table>
+             <div class="col-md-12">
+                        <form action="<?php echo base_url()?>Admin/Pemesanan/cetak_invoice"  method="post" enctype="multipart/form-data">
+                           <input class="" type="hidden" name="level"
+                           value="<?php echo $level ?>" />
+                           <div id="invoices">
+                           </div>
+                          <div class="modal-footer">
+                                  <button type="submit" class="btn btn-primary btn-block ripple m-t-20" name="action" value="cetak">Cetak Invoice</button>
+                          </div> 
+                        </form>
+              </div>
           </div>
           </div>
         </div>   
@@ -409,4 +428,23 @@
       $('#roww'+button_id+'').remove();
     });
   });
+  function myFunction(id_pemesan) {
+      // Get the checkbox
+      var s = "cek_"+id_pemesan;
+      var checkBox = document.getElementById(s);
+      var value = document.getElementById(s).value;
+      var nota = document.getElementById('invoices');
+      var newChild = '<input  type="text" name="invoice[]" value= "' + id_pemesan +'" id=invo_'+id_pemesan+' />';
+      // Get the output text
+      var text = document.getElementById("text");
+      // If the checkbox is checked, display the output text
+      if (checkBox.checked == true){
+        nota.insertAdjacentHTML('beforeend', newChild);
+        text.style.display = "block";
+      } else {
+        var x = "invo_"+id_pemesan;
+        document.getElementById(x).remove();
+        text.style.display = "none";
+      }
+    }
 </script>
