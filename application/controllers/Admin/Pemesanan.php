@@ -416,9 +416,14 @@
 	  	// 	$this->load->view('admin/v_cetak_perhari',$x);
 	  	// }
 
- 	  	function Cetak_Invoice($pemesanan_id){
- 	  		$level = $this->uri->segment(5);
- 	  		   if($level == 1){
+ 	  	function cetak_invoice(){
+
+	  		$invoice = $this->input->post('invoice');
+	  		$size = sizeof($invoice);
+ 	  		$level = $this->input->post('level');
+ 	  		for($i=0; $i < $size; $i++){
+ 	  			$pemesanan_id=$invoice[$i];
+ 	  				if($level == 1){
  	  		   	$y['title'] = "List Barang Pemesan";
  	  		   	   $x['p_id'] = $pemesanan_id;
  	  		   	   $x['lvl'] =$level;	
@@ -443,6 +448,8 @@
  	  		   	   $x['nama'] = $this->session->userdata('nama');
 			       $this->load->view('admin/v_cetak_invoice',$x);
  	  		   }
+ 	  		}
+ 	  		   
  	  	}
 
 	  	function asal_transaksi(){
