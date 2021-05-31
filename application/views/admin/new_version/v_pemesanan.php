@@ -434,7 +434,7 @@
       var checkBox = document.getElementById(s);
       var value = document.getElementById(s).value;
       var nota = document.getElementById('invoices');
-      var newChild = '<input  type="text" name="invoice[]" value= "' + id_pemesan +'" id=invo_'+id_pemesan+' />';
+      var newChild = '<input  type="hidden" name="invoice[]" value= "' + id_pemesan +'" id=invo_'+id_pemesan+' />';
       // Get the output text
       var text = document.getElementById("text");
       // If the checkbox is checked, display the output text
