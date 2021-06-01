@@ -4,11 +4,30 @@
 	 */
 	class M_barang_new extends CI_Model
 	{
+		function update_barang_noImage($barang_id,$nama_barang, $stock=0, $barang_harga_modal,$id_kategori,$id_toko){
+			$hsl = $this->db->query("UPDATE barang SET barang_nama='$nama_barang', barang_stock_awal=barang_stock_awal + '$stock',barang_stock_akhir=barang_stock_akhir + '$stock',barang_harga_modal='$barang_harga_modal',id_kategori='$id_kategori',id_toko='$id_toko'  WHERE barang_id='$barang_id'");
+     		return $hsl;
+		}
+		function update_barangImage($barang_id,$nama_barang, $stock=0, $barang_harga_modal, $barang_foto,$id_kategori,$id_toko){
+			$hsl = $this->db->query("UPDATE barang SET barang_nama='$nama_barang', barang_stock_awal=barang_stock_awal + '$stock',barang_stock_akhir=barang_stock_akhir + '$stock',barang_harga_modal='$barang_harga_modal',barang_foto='$barang_foto',id_kategori='$id_kategori',id_toko='$id_toko' WHERE barang_id='$barang_id'");
+     		return $hsl;
+		}
 		function get_all_barang_by_toko($id_toko){
 			$hasil=$this->db->query("SELECT a.*,DATE_FORMAT(barang_tanggal,'%d/%m/%Y %H:%i') AS tanggal FROM barang a WHERE  id_toko='$id_toko' ORDER BY barang_nama ");
 
         	return $hasil;
 		}
+		function get_all_barang_customer(){
+			
+			$hasil=$this->db->query("SELECT a.*,b.*, c.nama_kategori,DATE_FORMAT(barang_tanggal,'%d/%m/%Y %H:%i') AS tanggal,d.nama as nama_toko,d.id_toko FROM barang a, barang_non_reseller b,kategori c , toko d WHERE a.barang_id = b.barang_id and a.id_kategori=c.id_kategori and  a.id_toko=d.id_toko  ORDER BY barang_nama asc");
+        	return $hasil;
+		}
+		function get_all_barang_reseller(){
+			
+			$hasil=$this->db->query("SELECT barang.*,DATE_FORMAT(barang_tanggal,'%d/%m/%Y %H:%i') AS tanggal,d.nama as nama_toko,d.id_toko FROM barang,toko d where barang.id_toko=d.id_toko ORDER BY barang_nama");
+        	return $hasil;
+		}
+
 		function getHistoryStock($barang_id,$id_toko){
 			$hasil=$this->db->query("SELECT a.lb_id,c.pemesanan_nama,a.lb_qty as stock_berkurang,a.barang_id,b.barang_nama,DATE_FORMAT(a.lb_tanggal,'%d/%m/%Y %H:%i') AS tanggal FROM list_barang a,barang b, pemesanan c WHERE a.barang_id = '$barang_id' and  a.id_toko = '$id_toko' AND a.barang_id = b.barang_id AND a.pemesanan_id = c.pemesanan_id  ORDER BY `a`.`lb_id` DESC");
         	return $hasil;

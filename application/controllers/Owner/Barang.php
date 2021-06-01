@@ -14,7 +14,9 @@
 		    };
 
 		    $this->load->model('m_pemesanan');
+		    $this->load->model('m_pemesanan_new');
 		    $this->load->model('m_barang');
+		     $this->load->model('m_barang_new');
 		    $this->load->model('m_list_barang');
 		    $this->load->model('m_stock');
 		     $this->load->model('m_diskon');
@@ -61,10 +63,11 @@
 	  	function index(){
 	  		if($this->session->userdata('akses') == 1 && $this->session->userdata('masuk') == true){
 		       $y['title'] = "Barang Customer";
-		       $x['nonreseller'] = $this->m_barang->getDataNonReseller();
+		       $x['nonreseller'] = $this->m_barang_new->get_all_barang_customer();
 		       $x['total_omset']=$this->m_barang->getTotalomsetBarang();
 		       $x['total_untung']=$this->m_barang->getTotalUntung();
 		       $x['kategori'] = $this->m_pemesanan->getAllkategori();
+		        $x['toko'] = $this->m_pemesanan_new->getAlltoko();
 		       $this->load->view('v_header',$y);
 		       $this->load->view('owner/v_sidebar');
 		       $this->load->view('owner/v_barang_non_reseller',$x);
@@ -302,8 +305,7 @@
 	  	function Reseller(){
 	  		if($this->session->userdata('akses') == 1 && $this->session->userdata('masuk') == true){
 		       $y['title'] = "Barang Reseller";
-		       $x['reseller'] = $this->m_barang->getDataReseller();
-		       $x['barang'] = $this->m_barang->getAllBarang();
+		       $x['barang'] = $this->m_barang_new->get_all_barang_reseller();
 		       $this->load->view('v_header',$y);
 		       $this->load->view('owner/v_sidebar');
 		       $this->load->view('owner/v_barang_reseller',$x);
@@ -463,12 +465,13 @@
 			  		$bnr_id=$this->input->post('bnr_id');
 			  		$images=$this->input->post('barang_foto');
 			  		$id_kategori=$this->input->post('kategori');
+			  		$id_toko=$this->input->post('toko');
                     $path='./assets/images/'.$images;
                     unlink($path);
 			  		$harga_modal = str_replace(".", "", $this->input->post('harga_modal'));
 
 			  		
-			  		$this->m_barang->update_barangImage($barang_id,$nama_barang, $stock, $harga_modal,$gambar,$id_kategori);
+			  		$this->m_barang_new->update_barangImage($barang_id,$nama_barang, $stock, $harga_modal,$gambar,$id_kategori,$id_toko);
 			  		$this->m_barang->update_barang_non_reseller($bnr_id, $harga_non_reseller,$id_kategori);
 			  		$this->m_stock->save_stock_masuk($barang_id, $stock);
 					
@@ -485,9 +488,10 @@
 			  	$barang_id=$this->input->post('barang_id');
 			  	$bnr_id=$this->input->post('bnr_id');
 			  	
+			  		$id_toko=$this->input->post('toko');
 			  		$id_kategori=$this->input->post('kategori');
 			  	$harga_modal = str_replace(".", "", $this->input->post('harga_modal'));
-			  	$this->m_barang->update_barang_noImage($barang_id,$nama_barang, $stock, $harga_modal,$id_kategori);
+			  	$this->m_barang_new->update_barang_noImage($barang_id,$nama_barang, $stock, $harga_modal,$id_kategori,$id_toko);
 			  	$this->m_barang->update_barang_non_reseller($bnr_id, $harga_non_reseller);
 			  	$this->m_stock->save_stock_masuk($barang_id, $stock);
 	        	echo $this->session->set_flashdata('msg','success_non_reseller');
