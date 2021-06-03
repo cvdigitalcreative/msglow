@@ -436,7 +436,24 @@
 					echo $this->session->set_flashdata('msg','success_non_reseller');
 	                redirect('Owner/Barang');
 				}else{
-	                echo $this->session->set_flashdata('msg','warning');
+	                // echo $this->session->set_flashdata('msg','warning');
+	                // redirect('Owner/Barang');
+	                $gambar=$_FILES['filefoto']['name']; //ambil file nama
+			  		$harga_non_reseller =str_replace(".", "",$this->input->post('harga_normal')) ;
+			  		$nama_barang = $this->input->post('nama_barang');
+			  		$stock_awal = $this->input->post('stock_awal');
+			  		$stock_akhir = $this->input->post('stock_akhir');
+			  		$kategori = $this->input->post('kategori');
+			  		$barang_level = 2;
+			  		$harga_modal = str_replace(".", "", $this->input->post('harga_modal'));
+
+			  		$this->m_barang->savebarang($nama_barang, $stock_awal, $stock_akhir, $harga_modal, $barang_level, $gambar,$kategori);
+			  		$cadmin=$this->m_barang->getIdbyName($nama_barang);
+			  		$xcadmin=$cadmin->row_array();
+			  		$barang_id=$xcadmin['barang_id'];
+			  		$this->m_barang->savebarangnonreseller($barang_id, $harga_non_reseller);
+
+					echo $this->session->set_flashdata('msg','success_non_reseller');
 	                redirect('Owner/Barang');
 	            }         
 	        }else{
