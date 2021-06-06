@@ -76,6 +76,23 @@
 		       redirect('Login');
 		    }
 	  	}
+	  	function barang_filter(){
+	  		if($this->session->userdata('akses') == 1 && $this->session->userdata('masuk') == true){
+		       $y['title'] = "Barang Customer";
+		       $id_toko = $this->input->post('toko');
+		       $x['nonreseller'] = $this->m_barang_new->get_all_barang_customer_filter_toko($id_toko);
+		       $x['total_omset']=$this->m_barang->getTotalomsetBarang();
+		       $x['total_untung']=$this->m_barang->getTotalUntung();
+		       $x['kategori'] = $this->m_pemesanan->getAllkategori();
+		        $x['toko'] = $this->m_pemesanan_new->getAlltoko();
+		       $this->load->view('v_header',$y);
+		       $this->load->view('owner/v_sidebar');
+		       $this->load->view('owner/v_barang_non_reseller',$x);
+		    }
+		    else{
+		       redirect('Login');
+		    }
+	  	}
 
 	  	function pemesanan($level){
 	  		if($this->session->userdata('akses') == 1 && $this->session->userdata('masuk') == true){
@@ -421,6 +438,15 @@
 	        $config['allowed_types'] = 'gif|jpg|png|jpeg|bmp'; //tipe filenya 
 	        $config['max_size']             = 0; //size limits
 
+	        	$harga_non_reseller =str_replace(".", "",$this->input->post('harga_normal')) ;
+			  		$nama_barang = $this->input->post('nama_barang');
+			  		$stock_awal = $this->input->post('stock_awal');
+			  		$stock_akhir = $this->input->post('stock_akhir');
+			  		$kategori = $this->input->post('kategori');
+			  		$barang_level = 2;
+			  		$harga_modal = str_replace(".", "", $this->input->post('harga_modal'));
+			  		$suplier = $this->input->post('suplier');
+
 	        $this->upload->initialize($config);
 	        if(!empty($_FILES['filefoto']['name']))// cek apakah file ada di form
 	        {
@@ -428,19 +454,9 @@
 	            {
 	                $gbr = $this->upload->data(); // upload data 
 	                $gambar=$gbr['file_name']; //ambil file nama
-			  		$harga_non_reseller =str_replace(".", "",$this->input->post('harga_normal')) ;
-			  		$nama_barang = $this->input->post('nama_barang');
-			  		$stock_awal = $this->input->post('stock_awal');
-			  		$stock_akhir = $this->input->post('stock_akhir');
-			  		$kategori = $this->input->post('kategori');
-			  		$barang_level = 2;
-			  		$harga_modal = str_replace(".", "", $this->input->post('harga_modal'));
-
-			  		$this->m_barang->savebarang($nama_barang, $stock_awal, $stock_akhir, $harga_modal, $barang_level, $gambar,$kategori);
-			  		$cadmin=$this->m_barang->getIdbyName($nama_barang);
-			  		$xcadmin=$cadmin->row_array();
-			  		$barang_id=$xcadmin['barang_id'];
-			  		$this->m_barang->savebarangnonreseller($barang_id, $harga_non_reseller);
+			  	
+			  		$this->m_barang_new->savebarang($nama_barang, $stock_awal, $stock_akhir, $harga_modal, $barang_level, $gambar,$kategori,$suplier,$harga_non_reseller);
+			  		
 
 					echo $this->session->set_flashdata('msg','success_non_reseller');
 	                redirect('Owner/Barang');
@@ -448,20 +464,7 @@
 	                // echo $this->session->set_flashdata('msg','warning');
 	                // redirect('Owner/Barang');
 	                $gambar=$_FILES['filefoto']['name']; //ambil file nama
-			  		$harga_non_reseller =str_replace(".", "",$this->input->post('harga_normal')) ;
-			  		$nama_barang = $this->input->post('nama_barang');
-			  		$stock_awal = $this->input->post('stock_awal');
-			  		$stock_akhir = $this->input->post('stock_akhir');
-			  		$kategori = $this->input->post('kategori');
-			  		$barang_level = 2;
-			  		$harga_modal = str_replace(".", "", $this->input->post('harga_modal'));
-
-			  		$this->m_barang->savebarang($nama_barang, $stock_awal, $stock_akhir, $harga_modal, $barang_level, $gambar,$kategori);
-			  		$cadmin=$this->m_barang->getIdbyName($nama_barang);
-			  		$xcadmin=$cadmin->row_array();
-			  		$barang_id=$xcadmin['barang_id'];
-			  		$this->m_barang->savebarangnonreseller($barang_id, $harga_non_reseller);
-
+			  		$this->m_barang_new->savebarang($nama_barang, $stock_awal, $stock_akhir, $harga_modal, $barang_level, $gambar,$kategori,$suplier,$harga_non_reseller);
 					echo $this->session->set_flashdata('msg','success_non_reseller');
 	                redirect('Owner/Barang');
 	            }         
@@ -491,13 +494,12 @@
 			  		$bnr_id=$this->input->post('bnr_id');
 			  		$images=$this->input->post('barang_foto');
 			  		$id_kategori=$this->input->post('kategori');
-			  		$id_toko=$this->input->post('toko');
                     $path='./assets/images/'.$images;
                     unlink($path);
 			  		$harga_modal = str_replace(".", "", $this->input->post('harga_modal'));
 
 			  		
-			  		$this->m_barang_new->update_barangImage($barang_id,$nama_barang, $stock, $harga_modal,$gambar,$id_kategori,$id_toko);
+			  		$this->m_barang_new->update_barangImage($barang_id,$nama_barang, $stock, $harga_modal,$gambar,$id_kategori);
 			  		$this->m_barang->update_barang_non_reseller($bnr_id, $harga_non_reseller,$id_kategori);
 			  		$this->m_stock->save_stock_masuk($barang_id, $stock);
 					
@@ -513,11 +515,9 @@
 			  	$stock = $this->input->post('stock');
 			  	$barang_id=$this->input->post('barang_id');
 			  	$bnr_id=$this->input->post('bnr_id');
-			  	
-			  		$id_toko=$this->input->post('toko');
-			  		$id_kategori=$this->input->post('kategori');
+			  	$id_kategori=$this->input->post('kategori');
 			  	$harga_modal = str_replace(".", "", $this->input->post('harga_modal'));
-			  	$this->m_barang_new->update_barang_noImage($barang_id,$nama_barang, $stock, $harga_modal,$id_kategori,$id_toko);
+			  	$this->m_barang_new->update_barang_noImage($barang_id,$nama_barang, $stock, $harga_modal,$id_kategori);
 			  	$this->m_barang->update_barang_non_reseller($bnr_id, $harga_non_reseller);
 			  	$this->m_stock->save_stock_masuk($barang_id, $stock);
 	        	echo $this->session->set_flashdata('msg','success_non_reseller');

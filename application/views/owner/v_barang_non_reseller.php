@@ -29,6 +29,40 @@
               <div class="col-md-3">
                 <p class="mt-10"><b>=> Total Untung : <?php echo rupiah($total_untung)?></b></p>
               </div>
+             
+            </div>
+             <div class="col-xl-12 mb-10" style="display: flex">
+              <form action="<?php echo base_url()?>Owner/Barang/barang_filter"  method="post" enctype="multipart/form-data">
+                 <div class="modal-body p-20">
+                            <div class="row">
+
+                              
+                                
+
+                                <div class="col-md-12">
+                                  <label class="control-label">Toko</label>
+                                  <select class="form-control" name="toko" required>
+                                  <option value="0">Tidak Dipilih</option>
+                                    <?php
+                                      foreach($toko->result_array() as $i) :
+                                        $mp_id = $i['id_toko'];
+                                        $mp_nama = $i['nama'];
+                                        
+                                    ?>
+                                  <option value="<?php echo $mp_id?>"><?php echo $mp_nama?></option>
+                                     <?php endforeach;?>
+                                  </select>
+                                </div>
+
+                               
+
+                            </div> 
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success ripple save-category" name="action" value="filter">Filter</button>
+                                
+                            </div> 
+                    </div>
+              </form>
             </div>
             <div class="table-responsive">
             <table id="datatable" class="table table-striped table-bordered p-0">
@@ -71,7 +105,7 @@
                     $bnr_id = $i['bnr_id'];
                     $harga_normal = $i['bnr_harga'];
                     $nama_kategori = $i['nama_kategori'];
-                    $id_kategori = $i['nama_kategori'];
+                    $id_kategori = $i['id_kategori'];
                     $nama_toko = $i['nama_toko'];
                      $id_toko = $i['id_toko'];
                   ?>
@@ -189,12 +223,9 @@
                                             </div>
                                             <div class="col-md-12">
                                                 <label class="control-label">Stock Awal : <?= $barang_stock_awal?> | Stock Akhir : <?= $barang_stock_akhir?></label>
-                                                <input class="form-control form-white" type="number" name="stock" placeholder="masukkan jumlah stock yang ingin ditambah" />
+                                                <input class="form-control form-white" type="number" name="stock" value="0" placeholder="masukkan jumlah stock yang ingin ditambah" />
                                             </div>
-                                            <!-- <div class="col-md-12">
-                                                <label class="control-label">Stock Akhir</label>
-                                                <input class="form-control form-white"  type="number" name="stock_akhir" value="<?php echo $barang_stock_akhir?>" required/>
-                                            </div> -->
+                                           
                                             <div class="col-md-12">
                                                 <label class="control-label">Harga Modal</label>
                                                 <input class="form-control form-white money"  type="text" name="harga_modal" value="<?php echo $barang_harga_modal?>" required/>
@@ -221,20 +252,7 @@
                                                 <?php endforeach;?>
                                               </select>
                                             </div>
-                                            <div class="col-md-12">
-                                              <label class="control-label">Toko</label>
-                                              <select class="form-control" name="toko" required>
-                                                 <option value="<?php echo $id_toko?>"><?php echo $nama_toko?></option>
-                                                <?php
-                                                  foreach($toko->result_array() as $i) :
-                                                    $id_toko = $i['id_toko'];
-                                                    $nama = $i['nama'];
-
-                                                ?>
-                                                <option value="<?php echo $id_toko?>"><?php echo $nama?></option>
-                                                <?php endforeach;?>
-                                              </select>
-                                            </div>
+                                            
                                         </div>  
                                 </div>
                                 <div class="modal-footer">
@@ -294,6 +312,10 @@
                                     <input class="form-control form-white" type="file" name="filefoto" />
                                 </div>
                                 <div class="col-md-12">
+                                    <label class="control-label">Suplier</label>
+                                    <input class="form-control form-white" type="text" name="suplier" />
+                                </div>
+                                <div class="col-md-12">
                                   <label class="control-label">Kategori Barang</label>
                                   <select class="form-control" name="kategori" required>
                                     <option selected value="">Pilih</option>
@@ -307,20 +329,7 @@
                                     <?php endforeach;?>
                                   </select>
                                 </div>
-                                <div class="col-md-12">
-                                  <label class="control-label">Toko</label>
-                                  <select class="form-control" name="toko" required>
-                                    <option selected value="">Pilih</option>
-                                    <?php
-                                      foreach($toko->result_array() as $i) :
-                                        $id_toko = $i['id_toko'];
-                                        $nama = $i['nama'];
-
-                                    ?>
-                                    <option value="<?php echo $id_toko?>"><?php echo $nama?></option>
-                                    <?php endforeach;?>
-                                  </select>
-                                </div>
+                               
                             </div>          
                     </div>
                     <div class="modal-footer">
