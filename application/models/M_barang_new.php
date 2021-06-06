@@ -39,6 +39,20 @@
         	return $hasil;
 		}
 
+		function savebarangreseller($barang_nama, $kuantitas, $harga){
+			$id=$this->db->query("SELECT barang_id FROM barang where barang_nama='$barang_nama'")->result_array();
+
+			foreach($id as $i){
+				
+
+				$id_barang=uniqid();
+				$barang_id=$i['barang_id'];
+				 $this->db->query("INSERT INTO barang_reseller(barang_id,br_kuantitas,br_harga) VALUES ('$barang_id', '$kuantitas', '$harga')");
+			}
+		
+        	
+		}
+
 		function getHistoryStock($barang_id,$id_toko){
 			$hasil=$this->db->query("SELECT a.lb_id,c.pemesanan_nama,a.lb_qty as stock_berkurang,a.barang_id,b.barang_nama,DATE_FORMAT(a.lb_tanggal,'%d/%m/%Y %H:%i') AS tanggal FROM list_barang a,barang b, pemesanan c WHERE a.barang_id = '$barang_id' and  a.id_toko = '$id_toko' AND a.barang_id = b.barang_id AND a.pemesanan_id = c.pemesanan_id  ORDER BY `a`.`lb_id` DESC");
         	return $hasil;

@@ -105,7 +105,7 @@
                                         $barang_nama = $i['barang_nama'];
 
                                     ?>
-                                    <option value="<?php echo $barang_id?>"><?php echo $barang_nama?></option>
+                                    <option value="<?php echo $barang_nama?>"><?php echo $barang_nama?></option>
                                     <?php endforeach;?>
                                   </select>
                                  </div>

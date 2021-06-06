@@ -374,7 +374,7 @@
 			for($i=0; $i < $qty; $i++)
 			{
 				for ($kuantitas=$minqty[$i]; $kuantitas <= $maxqty[$i]; $kuantitas++) { 
-					$this->m_barang->savebarangreseller($barang_id, $kuantitas, $harga[$i]);
+					$this->m_barang_new->savebarangreseller($barang_id, $kuantitas, $harga[$i]);
 				}
 			}
 			echo $this->session->set_flashdata('msg','success');

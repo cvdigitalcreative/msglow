@@ -42,7 +42,7 @@
                                 <div class="col-md-12">
                                   <label class="control-label">Toko</label>
                                   <select class="form-control" name="toko" required>
-                                  <option value="0">Tidak Dipilih</option>
+                                  <option value="0">Seluruh Gudang</option>
                                     <?php
                                       foreach($toko->result_array() as $i) :
                                         $mp_id = $i['id_toko'];
@@ -59,7 +59,6 @@
                             </div> 
                             <div class="modal-footer">
                                 <button type="submit" class="btn btn-success ripple save-category" name="action" value="filter">Filter</button>
-                                
                             </div> 
                     </div>
               </form>
