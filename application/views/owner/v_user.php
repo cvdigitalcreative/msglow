@@ -174,17 +174,29 @@
                                       <select class="form-control" name="level">
                                         <?php 
                                           if ($level == 1) {
-                                            echo "<option value=''>Pilih</option>";
+                                            echo "<option value='1'>Owner</option>";
                                             echo "<option selected value='1'>Owner</option>";
                                             echo "<option value='2'>Admin</option>";
+                                             echo "<option value='3'>Admin Gudang Pusat</option>";
+                                              echo "<option value='4'>Admin Gudang Toko</option>";
                                           }elseif ($level == 2) {
-                                            echo "<option value=''>Pilih</option>";
-                                            echo "<option value='1'>Owner</option>";
-                                            echo "<option selected value='2'>Admin</option>";
-                                          }else{
-                                            echo "<option selected value=''>Pilih</option>";
-                                            echo "<option value='1'>Owner</option>";
+                                           echo "<option value='2'>Admin</option>";
+                                            echo "<option selected value='1'>Owner</option>";
                                             echo "<option value='2'>Admin</option>";
+                                             echo "<option value='3'>Admin Gudang Pusat</option>";
+                                              echo "<option value='4'>Admin Gudang Toko</option>";
+                                          }elseif ($level == 3) {
+                                            echo "<option value='3'>Admin Gudang Pusat</option>";
+                                            echo "<option selected value='1'>Owner</option>";
+                                            echo "<option value='2'>Admin</option>";
+                                             echo "<option value='3'>Admin Gudang Pusat</option>";
+                                              echo "<option value='4'>Admin Gudang Toko</option>";
+                                          }elseif ($level == 4) {
+                                            echo "<option value='4'>Adming Gudang Toko</option>";
+                                            echo "<option selected value='1'>Owner</option>";
+                                            echo "<option value='2'>Admin</option>";
+                                             echo "<option value='3'>Admin Gudang Pusat</option>";
+                                              echo "<option value='4'>Admin Gudang Toko</option>";
                                           }
                                         ?>
                                       </select>

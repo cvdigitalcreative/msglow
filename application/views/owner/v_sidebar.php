@@ -65,7 +65,7 @@
 
         
 
-        <li>
+       <!--  <li>
            <a href="javascript:void(0);" data-toggle="collapse" data-target="#order">
             <div class="pull-left"><i class="ti-files"></i><span class="right-nav-text">Order</span></div>
             <div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div>
@@ -74,7 +74,7 @@
             <li><a href="<?php echo base_url()?>Owner/Barang/pemesanan/2">Order Customer</a></li>
             <li> <a href="<?php echo base_url()?>Owner/Barang/pemesanan/1">Order Reseller</a></li>
           </ul>
-        </li>
+        </li> -->
         <li>
           <a href="<?php echo base_url()?>Owner/Diskon"><i class="ti-calendar"></i><span class="right-nav-text">Diskon per Barang</span> </a>
         </li>
