@@ -45,6 +45,7 @@
                       <th>Kategori </th>
                       <th>Total Omset</th>
                       <th>Tanggal Input</th>
+                      <th>Toko</th>
                       <th width="100"><center>Aksi</center></th>
                   </tr>
               </thead>
@@ -87,13 +88,60 @@
                       <td><?php echo rupiah($harga_normal * $barang_stock_akhir)?></td>
 
                       <td><?php echo $tanggal?></td>
+                      <td><?php echo $nama_toko?></td>
                       <td>
                           <a href="#" style="margin-right: 10px; margin-left: 20px;" data-toggle="modal" data-target="#editdata<?php echo $barang_id?>"><span class="ti-pencil"></span></a>
+                           <a href="#" style="margin-right: 10px; margin-left: 20px;" data-toggle="modal" data-target="#pindahstock<?php echo $barang_id?>"><span class="ti-files"></span></a>
                           <a href="#" style="margin-right: 10px" data-toggle="modal" data-target="#hapusdata<?php echo $barang_id?>"><span class="ti-trash"></span></a>
                           <a href="<?php echo base_url()?>Owner/Barang/History/<?php echo $barang_id?>" data-toggle="tooltip" data-placement="top" title="Lihat History Stock Keluar"><span class="ti-eye"></span></a>
-                           <a href="<?php echo base_url()?>Owner/Barang/History_stock_masuk/<?php echo $barang_id?>" data-toggle="tooltip" data-placement="top" title="Lihat History Stock Masuk"><span class="ti-eye"></span></a>
+                           <a href="<?php echo base_url()?>Owner/Barang/History_stock_masuk/<?php echo $barang_id?>" data-toggle="tooltip" data-pladcement="top" title="Lihat History Stock Masuk"><span class="ti-eye"></span></a>
                       </td>
                     </tr>
+
+                     <div class="modal" tabindex="-1" role="dialog" id="pindahstock<?php echo $barang_id?>">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Pindah Barang</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                </div>
+                                <form action="<?php echo base_url()?>Owner/Barang/pindahstock" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="barang_id" value="<?php echo $barang_id?>"/> 
+                                    <input type="hidden" name="nama_barang" value="<?php echo $barang_nama?>"/>
+                                   
+                                <div class="modal-body p-20">
+                                        <div class="row">
+                                            
+                                            <div class="col-md-12">
+                                                <label class="control-label">Jumlah yang diinginkan</label>
+                                                <input class="form-control form-white" type="number" name="stock" placeholder="masukkan jumlah stock yang ingin dipindahkan" />
+                                            </div>
+                                           
+                                            <div class="col-md-12">
+                                              <label class="control-label">Pilih Gudang Tujuan</label>
+                                              <select class="form-control" name="toko" required>
+                                                 <option value="">Pilih salah satu</option>
+                                                <?php
+                                                  foreach($toko->result_array() as $i) :
+                                                    $id_toko = $i['id_toko'];
+                                                    $nama = $i['nama'];
+
+                                                ?>
+                                                <option value="<?php echo $id_toko?>"><?php echo $nama?></option>
+                                                <?php endforeach;?>
+                                              </select>
+                                            </div>
+                                        </div>  
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger ripple" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-success ripple save-category" id="simpan">Save</button>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="modal" tabindex="-1" role="dialog" id="hapusdata<?php echo $barang_id?>">
                         <div class="modal-dialog modal-lg">
@@ -197,6 +245,8 @@
                             </div>
                         </div>
                     </div>
+
+
 
                     
 

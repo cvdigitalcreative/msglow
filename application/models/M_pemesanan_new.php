@@ -8,6 +8,30 @@
 			$hsl = $this->db->query("UPDATE pemesanan SET pemesanan_nama='$nama',pemesanan_hp='$no_hp',pemesanan_alamat='$alamat',kurir_id='$kurir_id',at_id='$at_id',mp_id = '$mp_id',id_pegawai = '$admin' WHERE pemesanan_id='$pemesanan_id'");
         	return $hsl;
 		}
+		function pindah_stock($barang_id,$nama_barang,$stock,$toko){
+			$this->db->trans_start();
+
+			$x = $this->db->query("SELECT id_toko,barang_stock_akhir FROM barang WHERE barang_id = '$barang_id'  ")->row_array();
+			$barang_stock_akhir=$x['barang_stock_akhir'];
+			$id_toko=$x['id_toko'];
+			$stok_barang=$barang_stock_akhir-$stock; 
+			$this->db->query("UPDATE barang SET barang_stock_akhir = $stok_barang WHERE barang_id = '$barang_id' ");
+			$this->db->query("INSERT INTO history_stok_barang_keluar(barang_id,jumlah,stok_keluar,barang_stock_keluar,id_toko) VALUES ('$barang_id',$stok_barang,$stock,$barang_stock_akhir,'$id_toko')");
+
+			$x = $this->db->query("SELECT barang_id,barang_stock_akhir FROM barang WHERE barang_nama = '$nama_barang' and id_toko='$toko'  ")->row_array();
+			$barang_stock_akhir=$x['barang_stock_akhir'];
+			$id_barang=$x['barang_id'];
+			$stok_barang=$barang_stock_akhir+$stock; 
+			$this->db->query("UPDATE barang SET barang_stock_akhir = $stok_barang WHERE barang_id = '$id_barang' ");
+			$this->db->query("INSERT INTO history_stok_barang_masuk(barang_id,jumlah,stok_keluar,barang_stock_keluar) VALUES ('$id_barang',$stok_barang,$stock,$barang_stock_akhir)");
+				$this->db->query("INSERT INTO history_stock_masuk(barang_id,stock) VALUES ('$id_barang','$stock')");
+
+        	$this->db->trans_complete();
+	        if($this->db->trans_status()==true)
+	        return true;
+	        else
+	        return false;
+		}
 		function hapus_pesanan($pemesanan_id,$id_toko){
 			$this->db->trans_start();
 				$this->db->query("DELETE FROM pemesanan WHERE pemesanan_id='$pemesanan_id'");

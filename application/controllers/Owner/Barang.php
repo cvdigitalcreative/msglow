@@ -261,6 +261,15 @@
 	  		echo $this->session->set_flashdata('msg','update');
 	       	redirect('Owner/Barang/pemesanan/'.$level);	
 	  	}
+	  	function pindahstock(){
+ 	  		$barang_id = $this->input->post('barang_id');
+ 	  		$nama_barang = $this->input->post('nama_barang');
+	  		$stock = $this->input->post('stock');
+	  		$toko = $this->input->post('toko');
+	  		$this->m_pemesanan_new->pindah_stock($barang_id,$nama_barang,$stock,$toko);
+	  		echo $this->session->set_flashdata('msg','update');
+	       	redirect('Owner/Barang/'.$level);	
+	  	}
 
 	  	function hapus_pesanan(){
 	  		$pemesanan_id = $this->input->post('pemesanan_id');
