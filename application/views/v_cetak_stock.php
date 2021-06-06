@@ -28,11 +28,12 @@ th,td{
              <table border="1"  width="100%" style="border-style: solid;border-width: thin;border-collapse: collapse;" >
               <tr>
                       <th style="width: 10%;">No</th>
-                      <th style="width: 30%;">Nama Barang</th>
+                      <th style="width: 15%;">Nama Barang</th>
                       <th style="width: 15%;"><center>Stock Awal Hari</center></th>
-                      <th style="width: 15%;"><center>Barang Keluar</center></th>
+                      <th style="width: 15%;"><center>Barang Kembali</center></th>
                       <th style="width: 15%;"> <center>Stock Akhir Hari</center></th>
                       <th style="width: 15%;"><center>Tanggal</center></th>
+                       <th style="width: 15%;"><center>Toko</center></th>
                   </tr>
               </thead>
               <tbody>
@@ -46,6 +47,7 @@ th,td{
                     $barang_stock_akhir = $i['stok_akhir_hari'];
                     $total = $i['total_barang_keluar'];
                     $tanggal = $i['tanggal'];
+                    $nama_toko = $i['nama_toko'];
                   ?>
                   <tr>
                       <td style="word-break: break-all;"> <center><?php echo $no?></center></td>
@@ -54,6 +56,7 @@ th,td{
                       <td style="word-break: break-all;"><center><?php echo $total?></center></td>
                       <td style="word-break: break-all;"><center><?php echo $barang_stock_akhir?></center></td>
                       <td style="word-break: break-all;"><center><?php echo $tanggal?></center></td>
+                      <td style="word-break: break-all;"><center><?php echo $nama_toko?></center></td>
                     </tr>
                     <?php endforeach;?>
               </tbody>
