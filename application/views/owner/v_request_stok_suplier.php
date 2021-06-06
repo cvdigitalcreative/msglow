@@ -15,31 +15,21 @@
     <!-- main body --> 
    
     <div class="row"> 
-      
+      <div class="col-xl-12 mb-10" style="display: flex">
+              
+             
+                <a href="" data-toggle="modal" data-target="#stock" class="btn btn-primary btn-block ripple m-t-20">
+                  <i class="fa fa-plus pr-2"></i> Tambah Stock Barang
+                </a>
+              
+        
+            
+            </div>
 
       <div class="col-xl-12 mb-30">     
         <div class="card card-statistics h-100"> 
           <div class="card-body">
-             <form action="<?php echo base_url()?>Owner/Request_stock/history_request_toko_filter"  method="post" enctype="multipart/form-data">
-                 <div class="modal-body p-20">
-                            <div class="row">
-
-                              <div class="col-md-6">
-                                      <label class="control-label">Dari Tanggal*</label>
-                                      <input class="form-control form-white" type="date" name="daritgl" />
-                                  </div>
-                                  <div class="col-md-6">
-                                      <label class="control-label">Ke Tanggal*</label>
-                                      <input class="form-control form-white" type="date" name="ketgl" />
-                                  </div>
-                               
-                            </div> 
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-success ripple save-category" name="action" value="filter">Filter</button>
-                            </div> 
-                    </div>
-              </form>
-
+             
       <div class="col-xl-12 mb-30">     
         <div class="card card-statistics h-100"> 
           <div class="card-body">
@@ -53,9 +43,10 @@
                       <th><center>Nama Toko Dari</center></th>
                       <th><center>Nama Toko Ke</center></th>
                       <th><center>Tanggal Request</center></th>
-                      <th><center>Tanggal ACC</center></th>
                       <th><center>Nama Admin</center></th>
                       <th><center>Jumlah</center></th>
+                       <th><center>Suplier</center></th>
+                      <th><center>Aksi</center></th>
                   </tr>
               </thead>
               <tbody>
@@ -70,10 +61,10 @@
                     $id_toko_ke = $i['id_toko_ke'];
                     $nama_toko_ke = $i['nama_toko_ke'];
                     $tanggal_request = $i['tanggal_request'];
-                      $tanggal_acc = $i['tanggal_acc'];
                     $id_admin = $i['id_admin'];
                     $user_nama = $i['user_nama'];
                     $jumlah = $i['jumlah'];
+                     $suplier = $i['suplier'];
                    
                   ?>
                   <tr>
@@ -82,9 +73,21 @@
                       <td><center><?php echo $nama_toko_dari?></center></td>
                       <td><center><?php echo $nama_toko_ke?></center></td>
                       <td><center><?php echo $tanggal_request?></center></td>
-                      <td><center><?php echo $tanggal_acc?></center></td>
                       <td><center><?php echo $user_nama?></center></td>
                       <td><center><?php echo $jumlah?></center></td>
+                      <td><center><?php echo $suplier?></center></td>
+                      <td><form action="<?php echo base_url()?>Owner/Request_stock/acc_suplier_stock" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="id_request" value="<?php echo $id_request?>">
+                         <input type="hidden" name="barang" value="<?php echo $nama_barang?>">
+                          <input type="hidden" name="qty" value="<?php echo $jumlah?>">
+                           <input type="hidden" name="dari_toko" value="<?php echo $id_toko_dari?>">
+                            <input type="hidden" name="ke_toko" value="<?php echo $id_toko_ke?>">
+                            <input type="hidden" name="suplier" value="<?php echo $suplier?>">
+                         <div class="modal-footer">
+                       
+                            <button type="submit" class="btn btn-success ripple save-category" id="acc">ACC</button>
+                          </div>
+                      </form></td>
                     </tr>
                     <?php endforeach;?>
               </tbody>
@@ -94,7 +97,68 @@
         </div>   
       </div>
   </div>
+  <div class="modal" tabindex="-1" role="dialog" id="stock">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Tambah Stock Barang</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    </div>
+                    <form action="<?php echo base_url()?>Owner/Request_stock/tambah_suplier_stock" method="post" enctype="multipart/form-data">
+                    <div class="modal-body p-20">
+                                 <div class="form-group col-md-12 mt-10" id="dynamic_field">
+                                        <div class="row"> 
+                                          <div class="col-md-8">
+                                            <label class="control-label">Barang</label>
+                                            <select class="form-control" name="barang" required>
+                                                <option selected value="">Pilih</option>
+                                                <?php
+                                                  foreach($nonreseller->result_array() as $i) :
+                                                    $barang_id = $i['barang_id'];
+                                                    $barang_nama = $i['barang_nama'];
+                                                ?>
+                                                  <option value="<?php echo $barang_nama?>"><?php echo $barang_nama?></option>
+                                                <?php endforeach;?> 
+                                            </select>
+                                          </div>
 
+                                          <div class="col-md-2">
+                                            <label class="control-label" for="harga">Jumlah</label>
+                                            <input class="form-control" type="number" name="qty" required>
+                                          </div>
+
+                                          
+                                      </div> 
+
+
+                               
+                    </div>
+                    
+                        <div class="col-md-12">
+                                  <label class="control-label">Dari Gudang</label>
+                                  <select class="form-control" name="dari_toko" required>
+                                    <option value="1">Gudang Utama</option>
+                                  </select>
+                                </div>  
+                                <div class="col-md-12">
+                                  <label class="control-label">Ke Gudang</label>
+                                  <select class="form-control" name="ke_toko" required>
+                                  <option value="1">Gudang Utama</option>
+                                  </select>
+                                </div>
+                            <div class="col-md-12">
+                                    <label class="control-label">Suplier</label>
+                                    <input class="form-control form-white" type="text" name="suplier"  required="" />
+                            </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger ripple" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success ripple save-category" id="simpan">Save</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    
 <!--=================================
  footer -->
  

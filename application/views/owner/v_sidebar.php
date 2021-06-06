@@ -42,6 +42,7 @@
            
              <li> <a href="<?php echo base_url()?>Owner/Request_stock"> Request</a> </li>
               <li> <a href="<?php echo base_url()?>Owner/Request_stock/history_request_toko">History Request</a> </li>
+              <li> <a href="<?php echo base_url()?>Owner/Request_stock/suplier_stock">Suplier Request</a> </li>
             
               
             

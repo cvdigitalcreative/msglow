@@ -2,7 +2,7 @@
 	/**
 	 * 
 	 */
-	class Request_stock extends CI_Controller
+	class Admin_gudang_pusat extends CI_Controller
 	{
 		
 		function __construct()
