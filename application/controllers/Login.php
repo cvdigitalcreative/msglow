@@ -40,7 +40,33 @@ class Login extends CI_Controller{
                 $this->session->set_userdata('id',$id);
                 $this->session->set_userdata('nama',$user_nama);
                 $this->session->set_userdata('id_toko',$id_toko);
-                redirect('Admin/Pemesanan/Home/1');
+                redirect('Admin/Pemesanan/Home/2');
+             } //Front Office 
+              else if($xcadmin['user_level']=='3')
+             {
+                $this->session->set_userdata('akses','3');
+                $id=$xcadmin['user_id'];
+                $user_nama=$xcadmin['user_nama'];
+                $user_hp=$xcadmin['user_hp'];
+                $id_toko=$xcadmin['user_toko'];
+                $this->session->set_userdata('hp',$user_hp);
+                $this->session->set_userdata('id',$id);
+                $this->session->set_userdata('nama',$user_nama);
+                $this->session->set_userdata('id_toko',$id_toko);
+                redirect('admin_gudang/Admin_gudang_pusat');
+             } //Front Office 
+              else if($xcadmin['user_level']=='4')
+             {
+                $this->session->set_userdata('akses','4');
+                $id=$xcadmin['user_id'];
+                $user_nama=$xcadmin['user_nama'];
+                $user_hp=$xcadmin['user_hp'];
+                $id_toko=$xcadmin['user_toko'];
+                $this->session->set_userdata('hp',$user_hp);
+                $this->session->set_userdata('id',$id);
+                $this->session->set_userdata('nama',$user_nama);
+                $this->session->set_userdata('id_toko',$id_toko);
+                redirect('admin_gudang/Admin_gudang_toko');
              } //Front Office 
         }
         

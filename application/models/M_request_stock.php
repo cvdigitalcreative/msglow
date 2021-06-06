@@ -8,6 +8,11 @@
 			$hasil=$this->db->query("SELECT a.*,b.user_nama, DATE_FORMAT(a.tanggal_request,'%d/%m/%Y %H:%i') AS tanggal_request FROM request_stok_barang a,user b WHERE a.status = 0 and b.user_id=a.id_admin ");
         	return $hasil;
 		}
+
+		function get_request_stock_by_toko($id_toko){
+			$hasil=$this->db->query("SELECT a.*,b.user_nama, DATE_FORMAT(a.tanggal_request,'%d/%m/%Y %H:%i') AS tanggal_request FROM request_stok_barang a,user b WHERE a.status = 0 and a.id_toko_ke='$id_toko' and b.user_id=a.id_admin ");
+        	return $hasil;
+		}
 		function get_request_stock_suplier(){
 			$hasil=$this->db->query("SELECT a.*,b.user_nama, DATE_FORMAT(a.tanggal_request,'%d/%m/%Y %H:%i') AS tanggal_request FROM request_stok_barang a,user b WHERE a.status = 2 and b.user_id=a.id_admin ");
         	return $hasil;
@@ -18,8 +23,17 @@
         	return $hasil;
 		}
 
+		function get_request_stock_acc_by_toko($id_toko){
+			$hasil=$this->db->query("SELECT a.*,b.user_nama, DATE_FORMAT(a.tanggal_request,'%d/%m/%Y %H:%i') AS tanggal_request FROM request_stok_barang a,user b WHERE a.status = 1 and a.id_toko_ke='$id_toko' and b.user_id=a.id_admin ");
+        	return $hasil;
+		}
+
 		function get_request_stock_acc_filter($dari,$ke){
 			$hasil=$this->db->query("SELECT a.*,b.user_nama, DATE_FORMAT(a.tanggal_request,'%d/%m/%Y %H:%i') AS tanggal_request FROM request_stok_barang a,user b WHERE a.status = 1 and b.user_id=a.id_admin and (DATE(tanggal_request) BETWEEN '$dari' AND '$ke')  ");
+        	return $hasil;
+		}
+		function get_request_stock_acc_filter_by_toko($dari,$ke,$id_toko){
+			$hasil=$this->db->query("SELECT a.*,b.user_nama, DATE_FORMAT(a.tanggal_request,'%d/%m/%Y %H:%i') AS tanggal_request FROM request_stok_barang a,user b WHERE a.status = 1 and b.user_id=a.id_admin and a.id_toko_ke='$id_toko' and (DATE(tanggal_request) BETWEEN '$dari' AND '$ke')  ");
         	return $hasil;
 		}
 
@@ -51,6 +65,19 @@
 				$this->db->query("INSERT INTO history_stock_masuk(barang_id,stock,id_toko) VALUES ('$barang_id','$jumlah','$id_toko_ke')");
 
 
+        	return $hasil;
+		}
+		function tambah_request_stock_admin($nama_barang,$jumlah,$id_toko_dari,$id_toko_ke,$id,$tanggal_acc,$status){
+			$x = $this->db->query("SELECT nama FROM toko WHERE id_toko = '$id_toko_dari'")->row_array();
+			$nama_toko_dari=$x['nama'];
+
+			$x = $this->db->query("SELECT nama FROM toko WHERE id_toko = '$id_toko_ke'")->row_array();
+			$nama_toko_ke=$x['nama'];
+
+
+			$hasil= $this->db->query("INSERT INTO request_stok_barang(nama_barang,id_toko_dari,nama_toko_dari,id_toko_ke,nama_toko_ke,id_admin,tanggal_acc,status,jumlah) VALUES ('$nama_barang','$id_toko_dari','$nama_toko_dari','$id_toko_ke','$nama_toko_ke','$id','$tanggal_acc','$status','$jumlah')");
+
+			
         	return $hasil;
 		}
 
@@ -121,6 +148,20 @@
 				$this->db->query("UPDATE barang SET barang_stock_akhir ='$stok_barang' WHERE barang_id = '$barang_id'");
 				$this->db->query("INSERT INTO history_stok_barang_masuk(barang_id,jumlah,stok_keluar,barang_stock_keluar,id_toko) VALUES ('$barang_id','$stok_barang','$jumlah','$barang_stock_akhir','$id_toko_ke')");
 				$this->db->query("INSERT INTO history_stock_masuk(barang_id,stock,id_toko) VALUES ('$barang_id','$jumlah','$id_toko_ke')");
+
+
+        	return $hasil;
+		}
+
+		function tambah_suplier_stock_admin($nama_barang,$jumlah,$id_toko_dari,$id_toko_ke,$id,$tanggal_acc,$status,$suplier){
+			$x = $this->db->query("SELECT nama FROM toko WHERE id_toko = '$id_toko_dari'")->row_array();
+			$nama_toko_dari=$x['nama'];
+
+			$x = $this->db->query("SELECT nama FROM toko WHERE id_toko = '$id_toko_ke'")->row_array();
+			$nama_toko_ke=$x['nama'];
+
+
+			$hasil= $this->db->query("INSERT INTO request_stok_barang(nama_barang,id_toko_dari,nama_toko_dari,id_toko_ke,nama_toko_ke,id_admin,tanggal_acc,status,jumlah,suplier) VALUES ('$nama_barang','$id_toko_dari','$nama_toko_dari','$id_toko_ke','$nama_toko_ke','$id','$tanggal_acc','$status','$jumlah','$suplier')");
 
 
         	return $hasil;

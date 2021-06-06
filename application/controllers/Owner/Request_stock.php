@@ -93,7 +93,7 @@
 		  		$id_toko_dari = $this->input->post('dari_toko');
 		  		$id_toko_ke = $this->input->post('ke_toko');
 		  		$id_admin=$this->session->userdata('id');
-		  		$suplier=$this->session->userdata('suplier');
+		  		$suplier=$this->input->post('suplier');
 		  		$tanggal_acc = date("Y-m-d");
 		  		$status = 1;
 		  		$this->m_request_stock->tambah_suplier_stock($barang_nama,$jumlah,$id_toko_dari,$id_toko_ke,$id_admin,$tanggal_acc,$status,$suplier);
