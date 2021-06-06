@@ -33,6 +33,7 @@
                       <th style="width: 15%;"><center>Stock Awal Hari</center></th>
                       <th style="width: 15%;"><center>Barang Keluar</center></th>
                       <th style="width: 15%;"> <center>Stock Akhir Hari</center></th>
+                      
                       <th style="width: 15%;"><center>Tanggal</center></th>
                   </tr>
               </thead>

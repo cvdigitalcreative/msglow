@@ -20,16 +20,46 @@
         <div class="card card-statistics h-100"> 
           <div class="card-body">
              <div class="col-xl-12 mb-10" style="display: flex">
-              <div class="col-md-3">
-                <a href="" data-toggle="modal" data-target="#cetak_tanggal" target="blank" class="btn btn-success btn-block ripple m-t-20">
-                  <i class="fa fa-print pr-2"></i> Cetak
-                </a>
-              </div>
-              <div class="col-md-3">
-                <a href="" data-toggle="modal" data-target="#cari" class="btn btn-primary btn-block ripple m-t-20">
-                  <i class="fa fa-search pr-2"></i> Cari Transaksi
-                </a>
-              </div>
+               <form action="<?php echo base_url()?>Owner/Stock/stok_keluar_filter"  method="post" enctype="multipart/form-data">
+                 <div class="modal-body p-20">
+                            <div class="row">
+
+                              <div class="col-md-6">
+                                      <label class="control-label">Dari Tanggal*</label>
+                                      <input class="form-control form-white" type="date" name="daritgl" />
+                                  </div>
+                                  <div class="col-md-6">
+                                      <label class="control-label">Ke Tanggal*</label>
+                                      <input class="form-control form-white" type="date" name="ketgl" />
+                                  </div>
+
+                               
+                                
+
+                                <div class="col-md-6">
+                                  <label class="control-label">Toko</label>
+                                  <select class="form-control" name="toko" required>
+                                  <option value="0">Tidak Dipilih</option>
+                                    <?php
+                                      foreach($toko->result_array() as $i) :
+                                        $mp_id = $i['id_toko'];
+                                        $mp_nama = $i['nama'];
+                                        
+                                    ?>
+                                  <option value="<?php echo $mp_id?>"><?php echo $mp_nama?></option>
+                                     <?php endforeach;?>
+                                  </select>
+                                </div>
+
+                               
+
+                            </div> 
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success ripple save-category" name="action" value="filter">Filter</button>
+                                <button type="submit" class="btn btn-update ripple save-category" name="action" value="cetak">Cetak</button>
+                            </div> 
+                    </div>
+              </form>
             </div>
             <div class="table-responsive">
             <table id="datatable" class="table table-striped table-bordered p-0">
@@ -40,6 +70,7 @@
                       <th style="width: 15%;"><center>Stock Awal Hari</center></th>
                       <th style="width: 15%;"><center>Barang Keluar</center></th>
                       <th style="width: 15%;"> <center>Stock Akhir Hari</center></th>
+                       <th style="width: 15%;"><center>Toko</center></th>
                       <th style="width: 15%;"><center>Tanggal</center></th>
                   </tr>
               </thead>
@@ -54,6 +85,7 @@
                     $barang_stock_akhir = $i['stok_akhir_hari'];
                     $total = $i['total_barang_keluar'];
                     $tanggal = $i['tanggal'];
+                     $nama_toko = $i['nama_toko'];
                   ?>
                   <tr>
                       <td style="word-break: break-all;"> <center><?php echo $no?></center></td>
@@ -61,6 +93,7 @@
                       <td style="word-break: break-all;"><center><?php echo $barang_stock_awal?></center></td>
                       <td style="word-break: break-all;"><center><?php echo $total?></center></td>
                       <td style="word-break: break-all;"><center><?php echo $barang_stock_akhir?></center></td>
+                      <td style="word-break: break-all;"><center><?php echo $nama_toko?></center></td>
                       <td style="word-break: break-all;"><center><?php echo $tanggal?></center></td>
                       
                     </tr>

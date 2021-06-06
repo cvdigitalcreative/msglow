@@ -57,6 +57,12 @@
 			$hasil=$this->db->query("SELECT a.lb_id,c.pemesanan_nama,a.lb_qty as stock_berkurang,a.barang_id,b.barang_nama,DATE_FORMAT(a.lb_tanggal,'%d/%m/%Y %H:%i') AS tanggal FROM list_barang a,barang b, pemesanan c WHERE a.barang_id = '$barang_id' and  a.id_toko = '$id_toko' AND a.barang_id = b.barang_id AND a.pemesanan_id = c.pemesanan_id  ORDER BY `a`.`lb_id` DESC");
         	return $hasil;
 		}
+
+		function get_barang(){
+			$hasil=$this->db->query("SELECT a.*,DATE_FORMAT(barang_tanggal,'%d/%m/%Y %H:%i') AS tanggal FROM barang a WHERE barang_level = 2 and id_toko=1 order by a.barang_nama asc ");
+        	return $hasil;
+		}
+
 		function get_barang_by_level_toko($level,$id_toko){
 			$hasil=$this->db->query("SELECT a.*,DATE_FORMAT(barang_tanggal,'%d/%m/%Y %H:%i') AS tanggal FROM barang a WHERE  id_toko='$id_toko' and barang_stock_akhir>0 ORDER BY barang_nama ");
 
@@ -64,9 +70,9 @@
 		}
 		function get_barang_by_id($id,$id_toko,$level,$qty){
 			if($level==1){
-				$hasil=$this->db->query("SELECT a.barang_nama,b.br_harga as harga_jual,a.barang_harga_modal as harga_modal FROM barang a,barang_reseller b WHERE  a.id_toko='$id_toko' and b.br_kuantitas='$qty' and a.barang_id=b.barang_id   ");
+				$hasil=$this->db->query("SELECT a.barang_nama,b.br_harga as harga_jual,a.barang_harga_modal as harga_modal FROM barang a,barang_reseller b WHERE  a.id_toko='$id_toko' and b.br_kuantitas='$qty' and a.barang_id=b.barang_id  and a.barang_id='$id'  ");
 			}else if($level==2){
-				$hasil=$this->db->query("SELECT a.barang_nama,b.bnr_harga as harga_jual,a.barang_harga_modal as harga_modal FROM barang a,barang_non_reseller b WHERE  a.id_toko='$id_toko'  and a.barang_id=b.barang_id   ");
+				$hasil=$this->db->query("SELECT a.barang_nama,b.bnr_harga as harga_jual,a.barang_harga_modal as harga_modal FROM barang a,barang_non_reseller b WHERE  a.id_toko='$id_toko'  and a.barang_id=b.barang_id  and a.barang_id='$id'    ");
 			}
         	return $hasil;
 		}

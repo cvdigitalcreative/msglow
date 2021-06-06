@@ -32,6 +32,7 @@ th,td{
                       <th style="width: 15%;"><center>Stock Awal Hari</center></th>
                       <th style="width: 15%;"><center>Barang Keluar</center></th>
                       <th style="width: 15%;"> <center>Stock Akhir Hari</center></th>
+                      <th style="width: 15%;"> <center>Toko</center></th>
                   </tr>
               </thead>
               <tbody>
@@ -44,6 +45,7 @@ th,td{
                     $barang_stock_awal = $i['stok_awal_hari'];
                     $barang_stock_akhir = $i['stok_akhir_hari'];
                     $total = $i['total_barang_keluar'];
+                     $nama_toko = $i['nama_toko'];
                   ?>
                   <tr>
                       <td style="word-break: break-all;"> <center><?php echo $no?></center></td>
@@ -51,6 +53,7 @@ th,td{
                       <td style="word-break: break-all;"><center><?php echo $barang_stock_awal?></center></td>
                       <td style="word-break: break-all;"><center><?php echo $total?></center></td>
                       <td style="word-break: break-all;"><center><?php echo $barang_stock_akhir?></center></td>
+                      <td style="word-break: break-all;"><center><?php echo $nama_toko?></center></td>
                      
                     </tr>
                     <?php endforeach;?>
