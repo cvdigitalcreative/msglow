@@ -19,6 +19,7 @@
              <li> <a href="<?php echo base_url()?>admin_gudang/Admin_gudang_pusat"> Request</a> </li>
               <li> <a href="<?php echo base_url()?>admin_gudang/Admin_gudang_pusat/history_request_toko">History Request</a> </li>
               <li> <a href="<?php echo base_url()?>admin_gudang/Admin_gudang_pusat/suplier_stock">Suplier Request</a> </li>
+              <li> <a href="<?php echo base_url()?>admin_gudang/Admin_gudang_pusat/paket_stok">Paket Barang</a> </li>
             
               
             
