@@ -13,7 +13,7 @@
      		return $hsl;
 		}
 		function get_barang_by_id($id){
-			$hasil=$this->db->query("SELECT a.barang_nama,b.bnr_harga as harga_jual,a.barang_harga_modal as harga_modal and a.barang_stock_akhir FROM barang a,barang_non_reseller b WHERE  a.id_toko='1'  and a.barang_id=b.barang_id  and a.barang_id='$id'    ");
+			$hasil=$this->db->query("SELECT a.barang_nama,b.bnr_harga as harga_jual,a.barang_harga_modal as harga_modal , a.barang_stock_akhir FROM barang a,barang_non_reseller b WHERE  a.id_toko='1'  and a.barang_id=b.barang_id  and a.barang_id='$id'    ");
         	return $hasil;
 		}
 
