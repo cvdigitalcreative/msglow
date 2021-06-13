@@ -45,7 +45,7 @@
 		  		$id_toko_ke = $this->session->userdata('id_toko');
 		  		$id_admin=$this->session->userdata('id');
 		  		$tanggal_acc = date("Y-m-d");
-		  		$status = 0;
+		  		$status = 3;
 		  		$this->m_request_stock->tambah_request_stock_admin($barang_nama,$jumlah,$id_toko_dari,$id_toko_ke,$id_admin,$tanggal_acc,$status);
 		  		echo $this->session->set_flashdata('msg','success');
 		       	redirect("admin_gudang/Admin_gudang_toko");	

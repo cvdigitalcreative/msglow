@@ -19,6 +19,7 @@
 		    $this->load->model('m_stock');
 		    $this->load->model('m_pemesanan');
 		    $this->load->model('m_barang_new');
+		      $this->load->model('m_barang');
 		    $this->load->library('upload');
 	  	}
 
@@ -31,6 +32,46 @@
 		       	$this->load->view('v_header',$y);
 		       	$this->load->view('admin/gudang/v_sidebar_admin_pusat');
 		       	$this->load->view('admin/gudang/v_request_stok',$x);
+		    }
+		    else{
+		       redirect('Login');
+		    }
+	  	}
+
+	  	function lihat_barang(){
+	  		if($this->session->userdata('akses') == 3 && $this->session->userdata('masuk') == true){
+		       $y['title'] = "Barang Customer";
+		       $x['nonreseller'] = $this->m_barang_new->get_all_barang_customer();
+		       $x['total_omset']=$this->m_barang->getTotalomsetBarang();
+		       $x['total_untung']=$this->m_barang->getTotalUntung();
+		       $x['kategori'] = $this->m_pemesanan->getAllkategori();
+		        $x['toko'] = $this->m_pemesanan_new->getAlltoko();
+		       $this->load->view('v_header',$y);
+		       $this->load->view('admin/gudang/v_sidebar_admin_pusat');
+		       $this->load->view('admin/gudang/v_barang_non_reseller',$x);
+		    }
+		    else{
+		       redirect('Login');
+		    }
+	  	}
+	  	function barang_filter(){
+	  		if($this->session->userdata('akses') == 3 && $this->session->userdata('masuk') == true){
+		       $y['title'] = "Barang Customer";
+		       $id_toko = $this->input->post('toko');
+		       $x['nonreseller'] = $this->m_barang_new->get_all_barang_customer_filter_toko($id_toko);
+		       $x['total_omset']=$this->m_barang->getTotalomsetBarang();
+		       $x['total_untung']=$this->m_barang->getTotalUntung();
+		       $x['kategori'] = $this->m_pemesanan->getAllkategori();
+		        $x['toko'] = $this->m_pemesanan_new->getAlltoko();
+		        if ($_POST['action'] == 'filter') {
+			       	$this->load->view('v_header',$y);
+		       		$this->load->view('admin/gudang/v_sidebar_admin_pusat');
+		       		$this->load->view('admin/gudang/v_barang_non_reseller',$x);
+				} else if ($_POST['action'] == 'cetak') {
+				    //action for delete
+				     $this->load->view('admin/gudang/v_cetak_laporan',$x);
+				}
+		      
 		    }
 		    else{
 		       redirect('Login');
@@ -148,6 +189,42 @@
 		       redirect('Login');
 		    }
 	  	}
+
+
+	  	function request_dari_gudang_lain(){
+	  		if($this->session->userdata('akses') == 3 && $this->session->userdata('masuk') == true){
+	  			$y['title'] = "Stock";
+	  			$x['stock'] = $this->m_request_stock->get_request_stock_dari_gudang_lain();
+	  			$x['nonreseller'] = $this->m_barang_new->get_barang();
+	  			$x['toko'] = $this->m_pemesanan_new->getAlltoko();
+		      
+		       		$this->load->view('v_header',$y);
+		       	$this->load->view('admin/gudang/v_sidebar_admin_pusat');
+		       	$this->load->view('admin/gudang/request_dari_gudang_lain',$x);
+		    }
+		    else{
+		       redirect('Login');
+		    }
+	  	}
+
+	  	function acc_request_dari_gudang_lain(){
+	  		if($this->session->userdata('akses') == 3 && $this->session->userdata('masuk') == true){
+	  			$id_request = $this->input->post('id_request');
+		  		$barang_nama = $this->input->post('barang');
+		  		$jumlah = $this->input->post('qty');
+		  		$id_toko_dari = $this->input->post('dari_toko');
+		  		$id_toko_ke = $this->input->post('ke_toko');
+		  		$id_admin=$this->session->userdata('id');
+		  		$tanggal_acc = date("Y-m-d");
+		  		$status = 0;
+		  		$this->m_request_stock->acc_request_stock_dari_gudang_lain($barang_nama,$jumlah,$id_toko_dari,$id_toko_ke,$id_admin,$tanggal_acc,$status,$id_request );
+		  		echo $this->session->set_flashdata('msg','success');
+		       	redirect("admin_gudang/Admin_gudang_pusat/request_dari_gudang_lain");	
+	       }else{
+		       redirect('Login');
+		    }
+	  	}
+
 
 	  	function tambah_request_stock(){
 	  		if($this->session->userdata('akses') == 3 && $this->session->userdata('masuk') == true){

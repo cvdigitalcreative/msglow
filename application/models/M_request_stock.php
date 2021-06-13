@@ -9,8 +9,13 @@
         	return $hasil;
 		}
 
+		function get_request_stock_dari_gudang_lain(){
+			$hasil=$this->db->query("SELECT a.*,b.user_nama, DATE_FORMAT(a.tanggal_request,'%d/%m/%Y %H:%i') AS tanggal_request FROM request_stok_barang a,user b WHERE a.status = 3 and b.user_id=a.id_admin ");
+        	return $hasil;
+		}
+
 		function get_request_stock_by_toko($id_toko){
-			$hasil=$this->db->query("SELECT a.*,b.user_nama, DATE_FORMAT(a.tanggal_request,'%d/%m/%Y %H:%i') AS tanggal_request FROM request_stok_barang a,user b WHERE a.status = 0 and a.id_toko_ke='$id_toko' and b.user_id=a.id_admin ");
+			$hasil=$this->db->query("SELECT a.*,b.user_nama, DATE_FORMAT(a.tanggal_request,'%d/%m/%Y %H:%i') AS tanggal_request FROM request_stok_barang a,user b WHERE a.status = 3 and a.id_toko_ke='$id_toko' and b.user_id=a.id_admin ");
         	return $hasil;
 		}
 		function get_request_stock_suplier(){
@@ -77,6 +82,18 @@
 
 			$hasil= $this->db->query("INSERT INTO request_stok_barang(nama_barang,id_toko_dari,nama_toko_dari,id_toko_ke,nama_toko_ke,id_admin,tanggal_acc,status,jumlah) VALUES ('$nama_barang','$id_toko_dari','$nama_toko_dari','$id_toko_ke','$nama_toko_ke','$id','$tanggal_acc','$status','$jumlah')");
 
+			
+        	return $hasil;
+		}
+
+		function acc_request_stock_dari_gudang_lain($nama_barang,$jumlah,$id_toko_dari,$id_toko_ke,$id,$tanggal_acc,$status,$id_request){
+			$x = $this->db->query("SELECT nama FROM toko WHERE id_toko = '$id_toko_dari'")->row_array();
+			$nama_toko_dari=$x['nama'];
+
+			$x = $this->db->query("SELECT nama FROM toko WHERE id_toko = '$id_toko_ke'")->row_array();
+			$nama_toko_ke=$x['nama'];
+			$tanggal_acc = date("Y-m-d");
+			$this->db->query("UPDATE request_stok_barang SET status ='0',tanggal_acc ='$tanggal_acc' WHERE id_request = '$id_request'");
 			
         	return $hasil;
 		}

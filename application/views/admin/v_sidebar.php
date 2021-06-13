@@ -18,7 +18,10 @@
             <li> <a href="<?php echo base_url()?>Admin/Pemesanan/Home/1">Order Reseller</a></li>
           </ul>
         </li>
-        
+          
+
+         <li> <a href="<?php echo base_url()?>Admin/Transaksi"><i class="ti-calendar"></i><span class="right-nav-text">History Transaksi</span> </a></li>
+
          <li> <a href="<?php echo base_url()?>Admin/Stock"><i class="ti-calendar"></i><span class="right-nav-text">Stock Keseluruhaan</span> </a></li>
            
          <li>  <a href="<?php echo base_url()?>Admin/Stock/stok_keluar"><i class="ti-calendar"></i><span class="right-nav-text">Stock Keluar Hari ini</span> </a></li>
