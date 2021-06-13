@@ -17,7 +17,10 @@
 				// }
 				$barang_stock_akhir=$x['barang_stock_akhir'];
 				$stok_barang=$barang_stock_akhir-$qty; 
-				$this->db->query("INSERT INTO list_barang(pemesanan_id,lb_qty,barang_id,lb_lvl) VALUES ('$pemesanan_id','$qty','$barang_id','$lvl')");
+				
+					$this->db->query("INSERT INTO list_barang(pemesanan_id,lb_qty,barang_id,lb_lvl) VALUES ('$pemesanan_id','$qty','$barang_id','$lvl')");
+				
+				
 				$this->db->query("UPDATE barang SET barang_stock_akhir ='$stok_barang' WHERE barang_id = '$barang_id'");
 				$this->db->query("INSERT INTO history_stock_barang(pemesanan_id,barang_id,stock_berkurang,lvl) VALUES ('$pemesanan_id','$barang_id','$qty','$lvl')");
 				$this->db->query("INSERT INTO history_stok_barang_keluar(barang_id,jumlah,stok_keluar,barang_stock_keluar) VALUES ('$barang_id',$stok_barang,$qty,$barang_stock_akhir)");

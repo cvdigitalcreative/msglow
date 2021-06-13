@@ -583,11 +583,11 @@
                                 </div>
                             </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger ripple" data-dismiss="modal">Tidak</button>
-                        <button type="submit" class="btn btn-success ripple save-category">Ya</button>
-                    </div>
-                    </form>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger ripple" data-dismiss="modal">Tidak</button>
+                                <button type="submit" class="btn btn-success ripple save-category">Ya</button>
+                            </div>
+                          </form>
                 </div>
             </div>
         </div>

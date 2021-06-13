@@ -5,7 +5,17 @@
 	class M_diskon extends CI_Model
 	{
 
-		
+		function get_potongan_harga($id){
+			$hasil=$this->db->query("SELECT potongan_harga  from diskon_all where id='$id'");
+        	return $hasil;
+		}
+
+		function get_potongan_harga_barang($id_barang){
+			date_default_timezone_set("Asia/Jakarta");
+        	$cur_date = date("Y-m-d");
+			$hasil=$this->db->query("SELECT potongan_harga  from diskon where barang_id='$id_barang' and '$cur_date' BETWEEN diskon.tanggal_mulai AND diskon.tanggal_berakhir ");
+        	return $hasil;
+		}
 
 		function getDataDiskon_pemesanan(){
 			$hasil=$this->db->query("SELECT *  from diskon_all where id!=1");

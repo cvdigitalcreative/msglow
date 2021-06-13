@@ -112,7 +112,7 @@
         	return $hasil;
 		}
 		
-			function getDataNonReseller11(){
+		function getDataNonReseller11(){
 			$hasil=$this->db->query("SELECT a.*,DATE_FORMAT(barang_tanggal,'%d/%m/%Y %H:%i') AS tanggal FROM barang a WHERE barang_level = 2 ");
         	return $hasil;
 		}

@@ -33,7 +33,9 @@
                       <th>Stock Akhir</th>
                       <th>Harga Modal</th>
                       <th>Tanggal Input</th>
+                       <th>Toko</th>
                       <th>Harga</th> 
+                     
                       <th width="100"><center>Aksi</center></th>
                   </tr>
               </thead>
@@ -56,6 +58,7 @@
                     $barang_harga_modal = $i['barang_harga_modal'];
                     $barang_level = $i['barang_level'];
                     $tanggal = $i['tanggal'];
+                    $nama_toko = $i['nama_toko'];
                   ?>
                   <tr>
                      <td><center><?php echo $no?></center></td>
@@ -65,6 +68,7 @@
                       <td><?php echo $barang_stock_akhir?></td>
                       <td><?php echo rupiah($barang_harga_modal)?></td>
                       <td><?php echo $tanggal?></td>
+                      <td><?php echo $nama_toko?></td>
                       <td><a href="<?php echo base_url()?>Owner/Barang/Harga_Reseller/<?php echo $barang_id?>" target="blank" class="btn btn-primary">Cek Harga</a></td>
                       <td>
 <!--                           <a href="#" style="margin-right: 10px; margin-left: 10px;" data-toggle="modal" data-target="#editdata<?php echo $barang_id?>"><span class="ti-pencil"></span></a> -->
@@ -101,7 +105,7 @@
                                         $barang_nama = $i['barang_nama'];
 
                                     ?>
-                                    <option value="<?php echo $barang_id?>"><?php echo $barang_nama?></option>
+                                    <option value="<?php echo $barang_nama?>"><?php echo $barang_nama?></option>
                                     <?php endforeach;?>
                                   </select>
                                  </div>
@@ -138,7 +142,7 @@
             </div>
         </div>
 
-        <?php foreach($reseller->result_array() as $i) :
+        <?php foreach($barang->result_array() as $i) :
                     $gambar = $i['barang_foto'];
                     $barang_id = $i['barang_id'];
                     $barang_nama = $i['barang_nama'];

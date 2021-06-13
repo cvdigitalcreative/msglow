@@ -14,6 +14,7 @@
 		    };
 
 		    $this->load->model('m_login');
+        $this->load->model('M_pemesanan_new');
 		    $this->load->library('upload');
 	  	}
 
@@ -21,6 +22,8 @@
 	  		if($this->session->userdata('akses') == 1 && $this->session->userdata('masuk') == true){
 		       $y['title'] = "User";
 		       $x['user'] = $this->m_login->getAlluser();
+
+           $x['toko'] = $this->M_pemesanan_new->getAlltoko();
 		       $this->load->view('v_header',$y);
 		       $this->load->view('owner/v_sidebar');
 		       $this->load->view('owner/v_user',$x);
@@ -61,8 +64,9 @@
                         $alamat = $this->input->post('alamat');
                         $username = $this->input->post('username');
                         $password = $this->input->post('password');
+                        $id_toko = $this->input->post('toko');
 
-                        $this->m_login->saveUser($nama, $level, $nohp, $alamat, $username, $password, $foto);
+                        $this->m_login->saveUser($nama, $level, $nohp, $alamat, $username, $password, $foto,$id_toko);
             			echo $this->session->set_flashdata('msg','success');
             			redirect('Owner/User');
                           
@@ -82,6 +86,8 @@
             $alamat = $this->input->post('alamat');
             $username = $this->input->post('username');
             $password = $this->input->post('password');
+
+             $id_toko = $this->input->post('toko');
 
     		$config['upload_path'] = './assets/admin/images/'; //path folder
               $config['allowed_types'] = 'gif|jpg|png|jpeg|bmp';
@@ -111,7 +117,7 @@
                           $path='./assets/admin/images/'.$images;
                           unlink($path);
 
-                          $this->m_login->updateUser($id, $nama, $level, $nohp, $alamat, $username, $password, $foto);
+                          $this->m_login->updateUser($id, $nama, $level, $nohp, $alamat, $username, $password, $foto,$id_toko);
 						  echo $this->session->set_flashdata('msg','success');
 						  redirect('Owner/User');
                       
@@ -122,7 +128,7 @@
                   
               }else{
 
-                $this->m_login->updateUserNoFoto($id, $nama, $level, $nohp, $alamat, $username, $password);
+                $this->m_login->updateUserNoFoto($id, $nama, $level, $nohp, $alamat, $username, $password,$id_toko);
         		echo $this->session->set_flashdata('msg','success');
         		redirect('Owner/User');
               }

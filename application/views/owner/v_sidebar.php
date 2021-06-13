@@ -17,12 +17,37 @@
             <li> <a href="<?php echo base_url()?>Owner/Barang/kategori_barang">Kategori Barang</a> </li>
             <li> <a href="<?php echo base_url()?>Owner/Barang">Barang Customer</a> </li>
             <li> <a href="<?php echo base_url()?>Owner/Barang/Reseller">Barang Reseller</a> </li>
+             
+              
+            
+          </ul>
+          <a href="javascript:void(0);" data-toggle="collapse" data-target="#History">
+            <div class="pull-left"><i class="ti-files"></i><span class="right-nav-text">History</span></div>
+            <div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div>
+          </a>
+          <ul id="History" class="collapse" data-parent="#sidebarnav">
+           
              <li> <a href="<?php echo base_url()?>Owner/Stock/stok_keluar">History Stock Keluar Barang</a> </li>
               <li> <a href="<?php echo base_url()?>Owner/Stock/stok_masuk">History Stock Masuk Barang</a> </li>
                <li> <a href="<?php echo base_url()?>Owner/Stock/stok_kembali">History Stock Kembali</a> </li>
               
             
           </ul>
+
+          <a href="javascript:void(0);" data-toggle="collapse" data-target="#Request">
+            <div class="pull-left"><i class="ti-files"></i><span class="right-nav-text">Request Stock</span></div>
+            <div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div>
+          </a>
+          <ul id="Request" class="collapse" data-parent="#sidebarnav">
+           
+             <li> <a href="<?php echo base_url()?>Owner/Request_stock"> Request</a> </li>
+              <li> <a href="<?php echo base_url()?>Owner/Request_stock/history_request_toko">History Request</a> </li>
+              <li> <a href="<?php echo base_url()?>Owner/Request_stock/suplier_stock">Suplier Request</a> </li>
+            
+              
+            
+          </ul>
+
         </li>
         <li>
        
@@ -33,192 +58,14 @@
             </a>
             <ul id="transaksi" class="collapse" data-parent="#sidebarnav">
               <li> <a href="<?php echo base_url()?>Owner/Transaksi">Transaksi Keseluruhan</a> </li>
-              <li><a href="<?php echo base_url()?>Owner/Transaksi/all/2">Transaksi Customer</a></li>
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/all/1">Transaksi Reseller</a></li>
+              
             </ul>
           </li>
         </li>
 
-        <li>
-             <a href="javascript:void(0);" data-toggle="collapse" data-target="#transaksi_cash">
-              <div class="pull-left"><i class="ti-files"></i><span class="right-nav-text">Transaksi Kategori Cash</span></div>
-              <div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div>
-            </a>
-            <ul id="transaksi_cash" class="collapse" data-parent="#sidebarnav">
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/gettrxbykategori_cash">Transaksi Keseluruhan</a> </li>
-              <li><a href="<?php echo base_url()?>Owner/Transaksi/all_kategori_cash/2">Transaksi Customer</a></li>
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/all_kategori_cash/1">Transaksi Reseller</a></li>
-            </ul>
-          </li>
-        </li>
-        <li>
-             <a href="javascript:void(0);" data-toggle="collapse" data-target="#transaksi_bank">
-              <div class="pull-left"><i class="ti-files"></i><span class="right-nav-text">Transaksi Kategori bank</span></div>
-              <div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div>
-            </a>
-            <ul id="transaksi_bank" class="collapse" data-parent="#sidebarnav">
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/gettrxbykategori_bank">Transaksi Keseluruhan</a> </li>
-              <li><a href="<?php echo base_url()?>Owner/Transaksi/all_kategori_bank/2">Transaksi Customer</a></li>
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/all_kategori_bank/1">Transaksi Reseller</a></li>
-            </ul>
-          </li>
-        </li>
-        <li>
-             <a href="javascript:void(0);" data-toggle="collapse" data-target="#transaksi_edcbca">
-              <div class="pull-left"><i class="ti-files"></i><span class="right-nav-text">Transaksi Kategori edc bca</span></div>
-              <div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div>
-            </a>
-            <ul id="transaksi_edcbca" class="collapse" data-parent="#sidebarnav">
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/gettrxbykategori_edcbca">Transaksi Keseluruhan</a> </li>
-              <li><a href="<?php echo base_url()?>Owner/Transaksi/all_kategori_edcbca/2">Transaksi Customer</a></li>
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/all_kategori_edcbca/1">Transaksi Reseller</a></li>
-            </ul>
-          </li>
-        </li>
-        <li>
-             <a href="javascript:void(0);" data-toggle="collapse" data-target="#transaksi_shopee">
-              <div class="pull-left"><i class="ti-files"></i><span class="right-nav-text">Transaksi Kategori Shopee</span></div>
-              <div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div>
-            </a>
-            <ul id="transaksi_shopee" class="collapse" data-parent="#sidebarnav">
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/gettrxbykategori_shopee">Transaksi Keseluruhan</a> </li>
-              <li><a href="<?php echo base_url()?>Owner/Transaksi/all_kategori_shopee/2">Transaksi Customer</a></li>
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/all_kategori_shopee/1">Transaksi Reseller</a></li>
-            </ul>
-          </li>
-        </li>
+        
 
-        <li>
-             <a href="javascript:void(0);" data-toggle="collapse" data-target="#transaksi_admin_1">
-              <div class="pull-left"><i class="ti-files"></i><span class="right-nav-text">Transaksi Admin Apri</span></div>
-              <div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div>
-            </a>
-            <ul id="transaksi_admin_1" class="collapse" data-parent="#sidebarnav">
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/get_trx_admin_1">Transaksi Keseluruhan</a> </li>
-              <li><a href="<?php echo base_url()?>Owner/Transaksi/all_trx_admin_1/2">Transaksi Customer</a></li>
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/all_trx_admin_1/1">Transaksi Reseller</a></li>
-            </ul>
-          </li>
-        </li>
-
-        <li>
-             <a href="javascript:void(0);" data-toggle="collapse" data-target="#transaksi_admin_2">
-              <div class="pull-left"><i class="ti-files"></i><span class="right-nav-text">Transaksi Admin Munif</span></div>
-              <div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div>
-            </a>
-            <ul id="transaksi_admin_2" class="collapse" data-parent="#sidebarnav">
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/get_trx_admin_2">Transaksi Keseluruhan</a> </li>
-              <li><a href="<?php echo base_url()?>Owner/Transaksi/all_trx_admin_2/2">Transaksi Customer</a></li>
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/all_trx_admin_2/1">Transaksi Reseller</a></li>
-            </ul>
-          </li>
-        </li>
-
-        <li>
-             <a href="javascript:void(0);" data-toggle="collapse" data-target="#transaksi_admin_3">
-              <div class="pull-left"><i class="ti-files"></i><span class="right-nav-text">Transaksi Admin Aisyah</span></div>
-              <div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div>
-            </a>
-            <ul id="transaksi_admin_3" class="collapse" data-parent="#sidebarnav">
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/get_trx_admin_3">Transaksi Keseluruhan</a> </li>
-              <li><a href="<?php echo base_url()?>Owner/Transaksi/all_trx_admin_3/2">Transaksi Customer</a></li>
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/all_trx_admin_3/1">Transaksi Reseller</a></li>
-            </ul>
-          </li>
-        </li>
-
-        <li>
-             <a href="javascript:void(0);" data-toggle="collapse" data-target="#transaksi_admin_4">
-              <div class="pull-left"><i class="ti-files"></i><span class="right-nav-text">Transaksi Admin Selly</span></div>
-              <div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div>
-            </a>
-            <ul id="transaksi_admin_4" class="collapse" data-parent="#sidebarnav">
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/get_trx_admin_4">Transaksi Keseluruhan</a> </li>
-              <li><a href="<?php echo base_url()?>Owner/Transaksi/all_trx_admin_4/2">Transaksi Customer</a></li>
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/all_trx_admin_4/1">Transaksi Reseller</a></li>
-            </ul>
-          </li>
-        </li>
-
-        <li>
-             <a href="javascript:void(0);" data-toggle="collapse" data-target="#transaksi_admin_5">
-              <div class="pull-left"><i class="ti-files"></i><span class="right-nav-text">Transaksi Admin 5</span></div>
-              <div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div>
-            </a>
-            <ul id="transaksi_admin_5" class="collapse" data-parent="#sidebarnav">
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/get_trx_admin_5">Transaksi Keseluruhan</a> </li>
-              <li><a href="<?php echo base_url()?>Owner/Transaksi/all_trx_admin_5/2">Transaksi Customer</a></li>
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/all_trx_admin_5/1">Transaksi Reseller</a></li>
-            </ul>
-          </li>
-        </li>
-
-        <li>
-             <a href="javascript:void(0);" data-toggle="collapse" data-target="#transaksi_admin_6">
-              <div class="pull-left"><i class="ti-files"></i><span class="right-nav-text">Transaksi Admin 6</span></div>
-              <div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div>
-            </a>
-            <ul id="transaksi_admin_6" class="collapse" data-parent="#sidebarnav">
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/get_trx_admin_6">Transaksi Keseluruhan</a> </li>
-              <li><a href="<?php echo base_url()?>Owner/Transaksi/all_trx_admin_6/2">Transaksi Customer</a></li>
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/all_trx_admin_6/1">Transaksi Reseller</a></li>
-            </ul>
-          </li>
-        </li>
-
-        <li>
-             <a href="javascript:void(0);" data-toggle="collapse" data-target="#transaksi_admin_7">
-              <div class="pull-left"><i class="ti-files"></i><span class="right-nav-text">Transaksi Admin 7</span></div>
-              <div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div>
-            </a>
-            <ul id="transaksi_admin_7" class="collapse" data-parent="#sidebarnav">
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/get_trx_admin_7">Transaksi Keseluruhan</a> </li>
-              <li><a href="<?php echo base_url()?>Owner/Transaksi/all_trx_admin_7/2">Transaksi Customer</a></li>
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/all_trx_admin_7/1">Transaksi Reseller</a></li>
-            </ul>
-          </li>
-        </li>
-
-        <li>
-             <a href="javascript:void(0);" data-toggle="collapse" data-target="#transaksi_admin_8">
-              <div class="pull-left"><i class="ti-files"></i><span class="right-nav-text">Transaksi Admin 8</span></div>
-              <div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div>
-            </a>
-            <ul id="transaksi_admin_8" class="collapse" data-parent="#sidebarnav">
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/get_trx_admin_8">Transaksi Keseluruhan</a> </li>
-              <li><a href="<?php echo base_url()?>Owner/Transaksi/all_trx_admin_8/2">Transaksi Customer</a></li>
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/all_trx_admin_8/1">Transaksi Reseller</a></li>
-            </ul>
-          </li>
-        </li>
-
-        <li>
-             <a href="javascript:void(0);" data-toggle="collapse" data-target="#transaksi_admin_9">
-              <div class="pull-left"><i class="ti-files"></i><span class="right-nav-text">Transaksi Admin 9</span></div>
-              <div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div>
-            </a>
-            <ul id="transaksi_admin_9" class="collapse" data-parent="#sidebarnav">
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/get_trx_admin_9">Transaksi Keseluruhan</a> </li>
-              <li><a href="<?php echo base_url()?>Owner/Transaksi/all_trx_admin_9/2">Transaksi Customer</a></li>
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/all_trx_admin_9/1">Transaksi Reseller</a></li>
-            </ul>
-          </li>
-        </li>
-
-         <li>
-             <a href="javascript:void(0);" data-toggle="collapse" data-target="#transaksi_admin_10">
-              <div class="pull-left"><i class="ti-files"></i><span class="right-nav-text">Transaksi Admin 10</span></div>
-              <div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div>
-            </a>
-            <ul id="transaksi_admin_10" class="collapse" data-parent="#sidebarnav">
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/get_trx_admin_10">Transaksi Keseluruhan</a> </li>
-              <li><a href="<?php echo base_url()?>Owner/Transaksi/all_trx_admin_10/2">Transaksi Customer</a></li>
-              <li> <a href="<?php echo base_url()?>Owner/Transaksi/all_trx_admin_10/1">Transaksi Reseller</a></li>
-            </ul>
-          </li>
-        </li>
-
-        <li>
+       <!--  <li>
            <a href="javascript:void(0);" data-toggle="collapse" data-target="#order">
             <div class="pull-left"><i class="ti-files"></i><span class="right-nav-text">Order</span></div>
             <div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div>
@@ -227,7 +74,7 @@
             <li><a href="<?php echo base_url()?>Owner/Barang/pemesanan/2">Order Customer</a></li>
             <li> <a href="<?php echo base_url()?>Owner/Barang/pemesanan/1">Order Reseller</a></li>
           </ul>
-        </li>
+        </li> -->
         <li>
           <a href="<?php echo base_url()?>Owner/Diskon"><i class="ti-calendar"></i><span class="right-nav-text">Diskon per Barang</span> </a>
         </li>

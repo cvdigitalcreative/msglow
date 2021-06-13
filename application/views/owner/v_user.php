@@ -93,7 +93,9 @@
                                       <select class="form-control" name="level">
                                           <option selected value="">Pilih</option>
                                           <option value="1">Owner</option>
-                                          <option value="2">Admin</option>
+                                          <option value="2">Admin Pemesan</option>
+                                          <option value="3">Admin Gudang Pusat</option>
+                                          <option value="4">Admin Gudang Toko</option>
                                       </select>
                                   </div>
                                   <div class="col-md-12">
@@ -116,6 +118,20 @@
                                     <label for="exampleFormControlFile1">Upload Gambar</label>
                                     <input type="file" class="form-control-file" name="filefoto" required>
                                   </div>
+                                  <div class="col-md-6">
+                                  <label class="control-label">Toko</label>
+                                  <select class="form-control" name="toko" required>
+                                  <option value="0">Tidak Dipilih</option>
+                                    <?php
+                                      foreach($toko->result_array() as $i) :
+                                        $mp_id = $i['id_toko'];
+                                        $mp_nama = $i['nama'];
+                                        
+                                    ?>
+                                  <option value="<?php echo $mp_id?>"><?php echo $mp_nama?></option>
+                                     <?php endforeach;?>
+                                  </select>
+                                </div>
                               </div>
                     </div>
                     <div class="modal-footer">
@@ -158,17 +174,29 @@
                                       <select class="form-control" name="level">
                                         <?php 
                                           if ($level == 1) {
-                                            echo "<option value=''>Pilih</option>";
+                                            echo "<option value='1'>Owner</option>";
                                             echo "<option selected value='1'>Owner</option>";
                                             echo "<option value='2'>Admin</option>";
+                                             echo "<option value='3'>Admin Gudang Pusat</option>";
+                                              echo "<option value='4'>Admin Gudang Toko</option>";
                                           }elseif ($level == 2) {
-                                            echo "<option value=''>Pilih</option>";
-                                            echo "<option value='1'>Owner</option>";
-                                            echo "<option selected value='2'>Admin</option>";
-                                          }else{
-                                            echo "<option selected value=''>Pilih</option>";
-                                            echo "<option value='1'>Owner</option>";
+                                           echo "<option value='2'>Admin</option>";
+                                            echo "<option selected value='1'>Owner</option>";
                                             echo "<option value='2'>Admin</option>";
+                                             echo "<option value='3'>Admin Gudang Pusat</option>";
+                                              echo "<option value='4'>Admin Gudang Toko</option>";
+                                          }elseif ($level == 3) {
+                                            echo "<option value='3'>Admin Gudang Pusat</option>";
+                                            echo "<option selected value='1'>Owner</option>";
+                                            echo "<option value='2'>Admin</option>";
+                                             echo "<option value='3'>Admin Gudang Pusat</option>";
+                                              echo "<option value='4'>Admin Gudang Toko</option>";
+                                          }elseif ($level == 4) {
+                                            echo "<option value='4'>Adming Gudang Toko</option>";
+                                            echo "<option selected value='1'>Owner</option>";
+                                            echo "<option value='2'>Admin</option>";
+                                             echo "<option value='3'>Admin Gudang Pusat</option>";
+                                              echo "<option value='4'>Admin Gudang Toko</option>";
                                           }
                                         ?>
                                       </select>
@@ -193,6 +221,21 @@
                                     <label for="exampleFormControlFile1">Upload Gambar</label>
                                     <input type="file" class="form-control-file" name="filefoto">
                                   </div>
+
+                                     <div class="col-md-12">
+                                  <label class="control-label">Toko</label>
+                                  <select class="form-control" name="toko" required>
+                                  <option value="0">Tidak Dipilih</option>
+                                    <?php
+                                      foreach($toko->result_array() as $i) :
+                                        $mp_id = $i['id_toko'];
+                                        $mp_nama = $i['nama'];
+                                        
+                                    ?>
+                                  <option value="<?php echo $mp_id?>"><?php echo $mp_nama?></option>
+                                     <?php endforeach;?>
+                                  </select>
+                                </div>
                               </div> 
                     </div>
                     <div class="modal-footer">

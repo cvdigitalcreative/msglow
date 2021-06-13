@@ -4,6 +4,15 @@
 	 */
 	class M_pemesanan extends CI_Model
 	{
+		function getPemesanan_fix(){
+			$hasil=$this->db->query("SELECT a.*,b.*,c.*,d.*,f.*,e.user_nama,DATE_FORMAT(pemesanan_tanggal,'%d/%m/%Y') AS tanggal FROM pemesanan a, kurir b, asal_transaksi c, metode_pembayaran d, user e, detail_transaksi f  WHERE a.kurir_id = b.kurir_id AND a.at_id = c.at_id AND a.mp_id = d.mp_id and a.uid=e.user_id and a.pemesanan_id=f.id_pemesanan and pemesanan_tanggal>=DATE_ADD(NOW(), INTERVAL -3 MONTH) ORDER BY a.pemesanan_id desc ");
+        	return $hasil;
+		}
+
+		function getPemesanan_sum(){
+			$hasil=$this->db->query("SELECT sum(total_omset),sum(total_omset) as total_omset,sum(total_untung) as total_untung FROM pemesanan a,detail_transaksi f  WHERE a.pemesanan_id=f.id_pemesanan and pemesanan_tanggal>=DATE_ADD(NOW(), INTERVAL -3 MONTH) ORDER BY a.pemesanan_id desc ");
+        	return $hasil;
+		}
 
 		function save_pesanan($nama_pemesan,$tanggal,$no_hp,$alamat,$level,$kurir_id,$at_id,$mp_id,$id_diskon,$uid){
 			$hsl = $this->db->query("INSERT INTO pemesanan(pemesanan_nama,pemesanan_tanggal,pemesanan_hp,pemesanan_alamat,level,kurir_id,at_id,mp_id,id_diskon,uid) VALUES ('$nama_pemesan','$tanggal','$no_hp','$alamat','$level','$kurir_id','$at_id','$mp_id','$id_diskon','$uid')");
@@ -11,7 +20,7 @@
 		}
 
 		function getPemesanan(){
-			$hasil=$this->db->query("SELECT a.*,b.*,c.*,d.*,e.user_nama,DATE_FORMAT(pemesanan_tanggal,'%d/%m/%Y') AS tanggal FROM pemesanan a, kurir b, asal_transaksi c, metode_pembayaran d, user e  WHERE a.kurir_id = b.kurir_id AND a.at_id = c.at_id AND a.mp_id = d.mp_id and a.uid=e.user_id ORDER BY a.pemesanan_id  DESC limit 100");
+			$hasil=$this->db->query("SELECT a.*,b.*,c.*,d.*,e.user_nama,DATE_FORMAT(pemesanan_tanggal,'%d/%m/%Y') AS tanggal FROM pemesanan a, kurir b, asal_transaksi c, metode_pembayaran d, user e  WHERE a.kurir_id = b.kurir_id AND a.at_id = c.at_id AND a.mp_id = d.mp_id and a.uid=e.user_id and pemesanan_tanggal>=DATE_ADD(NOW(), INTERVAL -3 MONTH) ORDER BY a.pemesanan_id desc ");
         	return $hasil;
 		}
 
