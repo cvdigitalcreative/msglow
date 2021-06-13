@@ -8,17 +8,9 @@
         <!-- menu title -->
          <li class="mt-10 mb-10 text-muted pl-4 font-medium menu-title">Website Components</li>
         <!-- All Form  -->
-        <li>
-          <a href="javascript:void(0);" data-toggle="collapse" data-target="#Barang">
-            <div class="pull-left"><i class="ti-files"></i><span class="right-nav-text">Order</span></div>
-            <div class="pull-right"><i class="ti-plus"></i></div><div class="clearfix"></div>
-          </a>
-          <ul id="Barang" class="collapse" data-parent="#sidebarnav">
-            <li><a href="<?php echo base_url()?>Admin/Pemesanan/Home/2">Order Customer</a></li>
-            <li> <a href="<?php echo base_url()?>Admin/Pemesanan/Home/1">Order Reseller</a></li>
-          </ul>
-        </li>
-          
+        
+        <li><a href="<?php echo base_url()?>Admin/Pemesanan/Home/2">Order Customer</a></li>
+        <li> <a href="<?php echo base_url()?>Admin/Pemesanan/Home/1">Order Reseller</a></li>
 
          <li> <a href="<?php echo base_url()?>Admin/Transaksi"><i class="ti-calendar"></i><span class="right-nav-text">History Transaksi</span> </a></li>
 

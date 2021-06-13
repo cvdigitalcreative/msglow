@@ -27,7 +27,7 @@
             </div>
 
             <div class="col-xl-12 mb-10" style="display: flex">
-              <form action="<?php echo base_url()?>Owner/Transaksi/filter"  method="post" enctype="multipart/form-data">
+              <form action="<?php echo base_url()?>Subowner/Transaksi/filter"  method="post" enctype="multipart/form-data">
                  <div class="modal-body p-20">
                             <div class="row">
 
