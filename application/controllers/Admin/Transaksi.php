@@ -13,6 +13,12 @@
 		      redirect($url);
 		    };
 		    $this->load->model('M_pemesanan_new');
+		     $this->load->model('m_pemesanan');
+		     $this->load->model('m_pemesanan_new');
+		    $this->load->model('m_barang');
+		    $this->load->model('m_barang_new');
+		    $this->load->model('m_list_barang');
+		    $this->load->model('m_diskon');
 	  	}
 	  	function hapus_pesanan(){
 	  		$pemesanan_id = $this->input->post('pemesanan_id');
