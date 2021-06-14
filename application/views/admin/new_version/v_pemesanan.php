@@ -14,7 +14,6 @@
   </div>
   <div class="row"> 
     <div class="col-xl-12 mb-30"> 
-      <div class="card card-statistics h-100"> 
        <div class="card-body">
          
          <div class="col-xl-12 mb-10" style="display: flex">
