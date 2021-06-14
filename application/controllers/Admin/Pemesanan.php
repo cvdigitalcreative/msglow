@@ -139,8 +139,8 @@
 	  			$temp=$this->m_barang_new->get_barang_by_id($barang_id[$i],$id_toko,$level,$total_qty_barang_all[$i])->row_array();
 	  			$temp_list=" - ".$temp['barang_nama']." = ".$qty[$i]." pcs ";
 	  			$list_barang=$list_barang.$temp_list;
-	  			$harga_modal=$harga_modal+$temp['harga_modal'];
-	  			$harga_jual=$harga_jual+$temp['harga_jual'];
+	  			$harga_modal=$harga_modal+($qty[$i]*$temp['harga_modal']);
+	  			$harga_jual=$harga_jual+($qty[$i]*$temp['harga_jual']);
 	  			$temp=$this->m_diskon->get_potongan_harga_barang($barang_id[$i])->row_array();
 	  			$diskon_barang=$temp['potongan_harga']+$diskon_barang;
 
