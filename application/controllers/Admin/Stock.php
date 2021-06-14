@@ -71,7 +71,6 @@
 	  			$x['stock'] = $this->M_history_stock_barang_keluar->getHistoryStock_all_by_tanggal($id_toko);
 	  			$cur_date = date("Y-m-d H:i:s");
                	$x['tanggal']=$cur_date;
-		   
 		       	$this->load->view('v_cetak_stock',$x);
 		    }
 		    else{
