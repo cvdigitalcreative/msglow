@@ -25,9 +25,7 @@ th,td{
            <div class="col-md-3">
                 <p class="mt-10"><b>=> Total Omset : <?php echo rupiah($total[0]['total_omset'])?></b></p>
               </div>
-              <div class="col-md-3">
-                <p class="mt-10"><b>=> Total Untung : <?php echo rupiah($total[0]['total_untung'])?></b></p>
-              </div>
+              
           <hr style="margin-left:10px;margin-right:10px;">
           <br>
 
@@ -47,7 +45,6 @@ th,td{
                       <th style="width: 5%;"> Toko </th>
                       <th style="width: 13%;">Barang</th>
                       <th>Total Omset</th>
-                      <th>Total Keuntungan</th>
                   </tr>
               </thead>
               <tbody>
@@ -94,7 +91,6 @@ th,td{
                        <?php echo $barang_all?>
                       </td>
                       <td><?php echo rupiah($omset)?></td>
-                      <td><?php echo rupiah($untung)?></td>
                     </tr>
                   <?php endforeach;?>
               </tbody>
