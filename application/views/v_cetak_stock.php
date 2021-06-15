@@ -19,7 +19,7 @@ th,td{
      <div>
           
           <div class="col-xl-12">
-            <center><h1>Laporan Stock </h1></center>
+            <center><h1>Laporan Stock Keluar </h1></center>
             <center><h1><?php echo $tanggal?></h1></center>
           </div>
           <hr style="margin-left:10px;margin-right:10px;">
@@ -30,7 +30,7 @@ th,td{
                       <th style="width: 10%;">No</th>
                       <th style="width: 15%;">Nama Barang</th>
                       <th style="width: 15%;"><center>Stock Awal Hari</center></th>
-                      <th style="width: 15%;"><center>Barang Kembali</center></th>
+                      <th style="width: 15%;"><center>Barang Keluar</center></th>
                       <th style="width: 15%;"> <center>Stock Akhir Hari</center></th>
                       <th style="width: 15%;"><center>Tanggal</center></th>
                        <th style="width: 15%;"><center>Toko</center></th>

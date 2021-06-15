@@ -100,7 +100,7 @@
 	  			$cur_date = date("Y-m-d H:i:s");
                	$x['tanggal']=$cur_date;
 		   
-		       	$this->load->view('v_cetak_stock_masuk',$x);
+		       	$this->load->view('v_cetak_stock_kembali',$x);
 		    }
 		    else{
 		       redirect('Login');

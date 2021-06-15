@@ -1,6 +1,6 @@
 <html>
 <head>
-  <title>Laporan Stock </title>
+  <title>Laporan Stock Perhari</title>
 </head>
 <!-- Favicon -->
 <link rel="shortcut icon" href="<?php echo base_url()?>assets/images/logo.png" />
@@ -19,7 +19,7 @@ th,td{
      <div>
           
           <div class="col-xl-12">
-            <center><h1>Laporan Stock Keluar</h1></center>
+            <center><h1>Laporan Stock Kembali </h1></center>
             <center><h1><?php echo $tanggal?></h1></center>
           </div>
           <hr style="margin-left:10px;margin-right:10px;">
@@ -28,11 +28,12 @@ th,td{
              <table border="1"  width="100%" style="border-style: solid;border-width: thin;border-collapse: collapse;" >
               <tr>
                       <th style="width: 10%;">No</th>
-                      <th style="width: 30%;">Nama Barang</th>
+                      <th style="width: 15%;">Nama Barang</th>
                       <th style="width: 15%;"><center>Stock Awal Hari</center></th>
-                      <th style="width: 15%;"><center>Barang Keluar</center></th>
+                      <th style="width: 15%;"><center>Barang Kembali</center></th>
                       <th style="width: 15%;"> <center>Stock Akhir Hari</center></th>
-                      <th style="width: 15%;"> <center>Toko</center></th>
+                      <th style="width: 15%;"><center>Tanggal</center></th>
+                      <th style="width: 15%;"><center>Toko</center></th>
                   </tr>
               </thead>
               <tbody>
@@ -44,8 +45,9 @@ th,td{
                     $barang_nama = $i['barang_nama'];
                     $barang_stock_awal = $i['stok_awal_hari'];
                     $barang_stock_akhir = $i['stok_akhir_hari'];
-                    $total = $i['total_barang_keluar'];
-                     $nama_toko = $i['nama_toko'];
+                    $total = $i['total_barang_masuk'];
+                    $tanggal = $i['tanggal'];
+                    $nama_toko = $i['nama_toko'];
                   ?>
                   <tr>
                       <td style="word-break: break-all;"> <center><?php echo $no?></center></td>
@@ -53,8 +55,8 @@ th,td{
                       <td style="word-break: break-all;"><center><?php echo $barang_stock_awal?></center></td>
                       <td style="word-break: break-all;"><center><?php echo $total?></center></td>
                       <td style="word-break: break-all;"><center><?php echo $barang_stock_akhir?></center></td>
+                      <td style="word-break: break-all;"><center><?php echo $tanggal?></center></td>
                       <td style="word-break: break-all;"><center><?php echo $nama_toko?></center></td>
-                     
                     </tr>
                     <?php endforeach;?>
               </tbody>

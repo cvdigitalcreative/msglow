@@ -19,7 +19,7 @@ th,td{
      <div>
           
           <div class="col-xl-12">
-            <center><h1>Laporan Stock </h1></center>
+            <center><h1>Laporan Stock Keseluruhaan</h1></center>
             <center><h1><?php echo $tanggal?></h1></center>
           </div>
           <hr style="margin-left:10px;margin-right:10px;">
