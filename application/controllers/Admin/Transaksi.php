@@ -106,18 +106,18 @@
 		       		}
 		       		$customer="=".$customer;
 		       	}
-		      
+		      $x['asal_transaksi'] = $this->M_pemesanan_new->getAllAT();
+		       $x['toko'] = $this->M_pemesanan_new->getAlltoko();
+		       $x['admin'] = $this->M_pemesanan_new->getAlladmin();
+		       $x['metode_pembayaran'] = $this->M_pemesanan_new->getAllMetpem();
+		       $x['jenis_customer'] = $this->M_pemesanan_new->getAllcustomer();
+		       $x['kurir'] = $this->M_pemesanan_new->getAllkurir();
 		      
 		       $y['title'] = "Transaksi ALL";
 		       $y['home_url'] = base_url()."Admin/Transaksi";
 		       $y['url'] = base_url()."Admin/Transaksi";
 		       $x['datapesanan']  = $this->M_pemesanan_new->get_filter($dari,  $ke,$admin,$metode,$asal_transaksi,$toko,$customer);
-		    	$x['asal_transaksi'] = $this->M_pemesanan_new->getAllAT();
-		       
-		       $x['toko'] = $this->M_pemesanan_new->getAlltoko();
-		       $x['admin'] = $this->M_pemesanan_new->getAlladmin();
-		       $x['metode_pembayaran'] = $this->M_pemesanan_new->getAllMetpem();
-		       $x['jenis_customer'] = $this->M_pemesanan_new->getAllcustomer();
+		    	
 		        $x['total']  = $this->M_pemesanan_new->getPemesanan_filter_sum($dari,  $ke,$admin,$metode,$asal_transaksi,$toko,$customer)->result_array();
 		       $x['level1']=0;
 		       
