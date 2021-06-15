@@ -168,16 +168,13 @@
 					  		$this->m_paket->savebarang($id_paket,$paket, $stock_awal, $stock_akhir, $harga_modal, $level, $gambar,$kategori,$suplier,$harga_jual);
 					  		
 							echo $this->session->set_flashdata('msg','success_non_reseller');
-
 			                redirect('admin_gudang/Admin_gudang_pusat/paket_stok');
 						}else{
 			                // echo $this->session->set_flashdata('msg','warning');
 			                // redirect('Owner/Barang');
 			                $gambar=$_FILES['filefoto']['name']; //ambil file nama
 					  		$this->m_paket->savebarang($id_paket,$paket, $stock_awal, $stock_akhir, $harga_modal, $level, $gambar,$kategori,$suplier,$harga_jual);
-					  		
 							echo $this->session->set_flashdata('msg','success_non_reseller');
-							  die();
 			                redirect('admin_gudang/Admin_gudang_pusat/paket_stok');
 			            } 
 
