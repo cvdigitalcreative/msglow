@@ -100,6 +100,7 @@
 		}
 
 		function save_pesanan($nama_pemesan,$tanggal,$no_hp,$alamat,$level,$kurir_id,$at_id,$mp_id,$id_diskon,$uid,$id_pegawai,$id_toko,$id_pemesan){
+			
 			$hsl = $this->db->query("INSERT INTO pemesanan(pemesanan_nama,pemesanan_tanggal,pemesanan_hp,pemesanan_alamat,level,kurir_id,at_id,mp_id,id_diskon,uid,id_pegawai,id_toko,pemesanan_id) VALUES ('$nama_pemesan','$tanggal','$no_hp','$alamat','$level','$kurir_id','$at_id','$mp_id','$id_diskon','$uid','$id_pegawai','$id_toko','$id_pemesan')");
         	return $hsl;
 		}
