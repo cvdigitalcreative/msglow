@@ -98,6 +98,7 @@
 	  		$id_diskon = $this->input->post('diskon');
 	  		$id_pegawai = $this->input->post('admin');
 	  		$id_pemesan=uniqid();
+
 	  		$this->m_pemesanan_new->save_pesanan($nama_pemesan,$tanggal,$no_hp,$alamat,$level,$kurir_id,$at_id,$mp_id,$id_diskon,$uid,$id_pegawai,$id_toko,$id_pemesan);
 	  		$size = sizeof($barang_id);
 	  		$list_barang="";
@@ -133,6 +134,7 @@
 	  		$harga_modal=0;
 	  		$harga_jual=0;
 	  		$diskon_barang=0;
+
             for($i=0; $i < $size; $i++){
 	  			$this->m_barang_new->save_list_barang($id_pemesan,$qty[$i],$barang_id[$i],$level,$id_toko,$total_qty_barang_all[$i]);
 
@@ -149,6 +151,7 @@
 	  		$temp=$this->m_diskon->get_potongan_harga($id_diskon)->row_array();
 	  		$diskon_pesanan=$temp['potongan_harga'];
 	  		$total_untung=$harga_jual-$harga_modal;
+	  		$harga_jual=$harga_jual-$diskon_pesanan;
 	  		$this->m_pemesanan_new->save_detail_pesanan($id_pemesan,$harga_jual,$total_untung,$list_barang,$diskon_pesanan,$diskon_barang,$harga_modal);
 	  		echo $this->session->set_flashdata('msg','success');
 
