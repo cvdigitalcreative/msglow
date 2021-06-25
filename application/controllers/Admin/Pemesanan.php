@@ -136,8 +136,6 @@
 	  		$diskon_barang=0;
 
             for($i=0; $i < $size; $i++){
-	  			$this->m_barang_new->save_list_barang($id_pemesan,$qty[$i],$barang_id[$i],$level,$id_toko,$total_qty_barang_all[$i]);
-
 	  			$temp=$this->m_barang_new->get_barang_by_id($barang_id[$i],$id_toko,$level,$total_qty_barang_all[$i])->row_array();
 	  			$temp_list=" - ".$temp['barang_nama']." = ".$qty[$i]." pcs ";
 	  			$list_barang=$list_barang.$temp_list;
@@ -153,6 +151,9 @@
 	  		$total_untung=$harga_jual-$harga_modal;
 	  		$harga_jual=$harga_jual-$diskon_pesanan;
 	  		$this->m_pemesanan_new->save_detail_pesanan($id_pemesan,$harga_jual,$total_untung,$list_barang,$diskon_pesanan,$diskon_barang,$harga_modal);
+	  		 for($i=0; $i < $size; $i++){
+	  			$this->m_barang_new->save_list_barang($id_pemesan,$qty[$i],$barang_id[$i],$level,$id_toko,$total_qty_barang_all[$i]);
+	  		}
 	  		echo $this->session->set_flashdata('msg','success');
 
 	       	redirect('Admin/Pemesanan/Home/'.$level);		  	
