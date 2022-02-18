@@ -118,6 +118,11 @@
 			$hasil=$this->db->query("SELECT * FROM kurir");
         	return $hasil;
 		}
+		function get_selisih_waktu_pemesanan($nama_pemesan){
+			$hasil=$this->db->query("select MINUTE(timediff(tanggal_masukan,current_timestamp()) ) as selisih from pemesanan where pemesanan.pemesanan_nama='$nama_pemesan' order by tanggal_masukan desc limit 1");
+        	return $hasil;
+		}
+		
 		function getAllMetpem(){
 			$hasil=$this->db->query("SELECT * FROM metode_pembayaran");
         	return $hasil;
