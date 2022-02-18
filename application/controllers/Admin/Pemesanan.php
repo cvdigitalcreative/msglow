@@ -98,64 +98,68 @@
 	  		$id_diskon = $this->input->post('diskon');
 	  		$id_pegawai = $this->input->post('admin');
 	  		$id_pemesan=uniqid();
+			
+			$selisih_waktu=$this->m_pemesanan_new->get_selisih_waktu_pemesanan($nama_pemesan)->->result_array()[0]['selisih'];
+	  		if($selisih_waktu>1){
+				
+				$this->m_pemesanan_new->save_pesanan($nama_pemesan,$tanggal,$no_hp,$alamat,$level,$kurir_id,$at_id,$mp_id,$id_diskon,$uid,$id_pegawai,$id_toko,$id_pemesan);
+				$size = sizeof($barang_id);
+				$list_barang="";
+				$ktg_qty=0;
 
-	  		$this->m_pemesanan_new->save_pesanan($nama_pemesan,$tanggal,$no_hp,$alamat,$level,$kurir_id,$at_id,$mp_id,$id_diskon,$uid,$id_pegawai,$id_toko,$id_pemesan);
-	  		$size = sizeof($barang_id);
-	  		$list_barang="";
-	  		$ktg_qty=0;
+				if($level==1){
+					$kategori_id_all=array();
+					$qty_barang_all=array();
+					for($i=0; $i < $size; $i++){
+						$kategori_id=$this->m_barang_new->get_kategori_id_barang($barang_id[$i],$id_toko)[0]['id_kategori'];
+						array_push($kategori_id_all,$kategori_id);
+						array_push($qty_barang_all,$qty[$i]);
+						// $this->m_list_barang->save_list_barang($pemesanan_id,$qty[$i],$barang_id[$i],$level);
+					}
 
-	  		if($level==1){
-	  			$kategori_id_all=array();
-		  		$qty_barang_all=array();
-		  		for($i=0; $i < $size; $i++){
-		  			$kategori_id=$this->m_barang_new->get_kategori_id_barang($barang_id[$i],$id_toko)[0]['id_kategori'];
-		  			array_push($kategori_id_all,$kategori_id);
-		  			array_push($qty_barang_all,$qty[$i]);
-		  			// $this->m_list_barang->save_list_barang($pemesanan_id,$qty[$i],$barang_id[$i],$level);
-		  		}
+					$total_qty_barang_all=array();
+					for($i=0; $i<sizeof($kategori_id_all); $i++){
+						if($kategori_id_all[$i]==0){
+							array_push($total_qty_barang_all,$qty[$i]);
+						}else{
+							$qty_totals=$qty_barang_all[$i];
+							for($j=0; $j<sizeof($kategori_id_all); $j++){
+								if($i!=$j){
+									if($kategori_id_all[$i]==$kategori_id_all[$j]){
+										$qty_totals=$qty_totals+$qty_barang_all[$j];
+									}
+								}
+							}
+							array_push($total_qty_barang_all,$qty_totals);
+						}
+					}
+				}
+				$harga_modal=0;
+				$harga_jual=0;
+				$diskon_barang=0;
 
-	  			$total_qty_barang_all=array();
-		  		for($i=0; $i<sizeof($kategori_id_all); $i++){
-		  			if($kategori_id_all[$i]==0){
-		  				array_push($total_qty_barang_all,$qty[$i]);
-		  			}else{
-		  				$qty_totals=$qty_barang_all[$i];
-		  				for($j=0; $j<sizeof($kategori_id_all); $j++){
-		  					if($i!=$j){
-		  						if($kategori_id_all[$i]==$kategori_id_all[$j]){
-		  							$qty_totals=$qty_totals+$qty_barang_all[$j];
-		  						}
-		  					}
-		  				}
-		  				array_push($total_qty_barang_all,$qty_totals);
-		  			}
-	  			}
-	  		}
-	  		$harga_modal=0;
-	  		$harga_jual=0;
-	  		$diskon_barang=0;
+		    		for($i=0; $i < $size; $i++){
+					$this->m_barang_new->save_list_barang($id_pemesan,$qty[$i],$barang_id[$i],$level,$id_toko,$total_qty_barang_all[$i]);
 
-            for($i=0; $i < $size; $i++){
-	  			$this->m_barang_new->save_list_barang($id_pemesan,$qty[$i],$barang_id[$i],$level,$id_toko,$total_qty_barang_all[$i]);
+					$temp=$this->m_barang_new->get_barang_by_id($barang_id[$i],$id_toko,$level,$total_qty_barang_all[$i])->row_array();
+					$temp_list=" - ".$temp['barang_nama']." = ".$qty[$i]." pcs ";
+					$list_barang=$list_barang.$temp_list;
+					$harga_modal=$harga_modal+($qty[$i]*$temp['harga_modal']);
+					$harga_jual=$harga_jual+($qty[$i]*$temp['harga_jual']);
+					$temp=$this->m_diskon->get_potongan_harga_barang($barang_id[$i])->row_array();
+					$diskon_barang=$temp['potongan_harga']+$diskon_barang;
 
-	  			$temp=$this->m_barang_new->get_barang_by_id($barang_id[$i],$id_toko,$level,$total_qty_barang_all[$i])->row_array();
-	  			$temp_list=" - ".$temp['barang_nama']." = ".$qty[$i]." pcs ";
-	  			$list_barang=$list_barang.$temp_list;
-	  			$harga_modal=$harga_modal+($qty[$i]*$temp['harga_modal']);
-	  			$harga_jual=$harga_jual+($qty[$i]*$temp['harga_jual']);
-	  			$temp=$this->m_diskon->get_potongan_harga_barang($barang_id[$i])->row_array();
-	  			$diskon_barang=$temp['potongan_harga']+$diskon_barang;
-
-	  		}
-	  		$diskon_pesanan=0;
-	  		$temp=$this->m_diskon->get_potongan_harga($id_diskon)->row_array();
-	  		$diskon_pesanan=$temp['potongan_harga'];
-	  		$total_untung=$harga_jual-$harga_modal;
-	  		$harga_jual=$harga_jual-$diskon_pesanan;
-	  		$this->m_pemesanan_new->save_detail_pesanan($id_pemesan,$harga_jual,$total_untung,$list_barang,$diskon_pesanan,$diskon_barang,$harga_modal);
-	  		echo $this->session->set_flashdata('msg','success');
-
-	       	redirect('Admin/Pemesanan/Home/'.$level);		  	
+				}
+				$diskon_pesanan=0;
+				$temp=$this->m_diskon->get_potongan_harga($id_diskon)->row_array();
+				$diskon_pesanan=$temp['potongan_harga'];
+				$total_untung=$harga_jual-$harga_modal;
+				$harga_jual=$harga_jual-$diskon_pesanan;
+				$this->m_pemesanan_new->save_detail_pesanan($id_pemesan,$harga_jual,$total_untung,$list_barang,$diskon_pesanan,$diskon_barang,$harga_modal);
+				echo $this->session->set_flashdata('msg','success');
+			}
+	       		redirect('Admin/Pemesanan/Home/'.$level);
+				
  	  	}
 
  	  	// function tambahpesananNR(){
