@@ -99,7 +99,7 @@
 	  		$id_pegawai = $this->input->post('admin');
 	  		$id_pemesan=uniqid();
 			
-			$selisih_waktu=$this->m_pemesanan_new->get_selisih_waktu_pemesanan($nama_pemesan)->->result_array()[0]['selisih'];
+			$selisih_waktu=$this->m_pemesanan_new->get_selisih_waktu_pemesanan($nama_pemesan)->result_array()[0]['selisih'];
 	  		if($selisih_waktu>1){
 				
 				$this->m_pemesanan_new->save_pesanan($nama_pemesan,$tanggal,$no_hp,$alamat,$level,$kurir_id,$at_id,$mp_id,$id_diskon,$uid,$id_pegawai,$id_toko,$id_pemesan);
