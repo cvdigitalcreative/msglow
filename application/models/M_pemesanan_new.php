@@ -119,7 +119,7 @@
         	return $hasil;
 		}
 		function get_selisih_waktu_pemesanan($nama_pemesan){
-			$hasil=$this->db->query("select MINUTE(timediff(tanggal_masukan,current_timestamp()) ) as selisih from pemesanan where pemesanan.pemesanan_nama='$nama_pemesan' order by tanggal_masukan desc limit 1");
+			$hasil=$this->db->query("select HOUR(timediff(tanggal_masukan,current_timestamp()) ) as selisih_jam,MINUTE(timediff(tanggal_masukan,current_timestamp()) ) as selisih from pemesanan where pemesanan.pemesanan_nama='$nama_pemesan' order by tanggal_masukan desc limit 1");
         	return $hasil;
 		}
 		
