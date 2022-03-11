@@ -216,7 +216,7 @@
 				$this->m_pemesanan_new->save_detail_pesanan($id_pemesan,$harga_jual,$total_untung,$list_barang,$diskon_pesanan,$diskon_barang,$harga_modal);
 				echo $this->session->set_flashdata('msg','success');
 			}else{
-				echo $this->session->set_flashdata('msg','Gagal Insert');
+				echo $this->session->set_flashdata('msg','Pemesanan telah diinput harap konfirmasi ulang atau lakukan transaksi dengan nama berbeda');
 			}
 	       		redirect('Admin/Pemesanan/Home/'.$level);
 				
