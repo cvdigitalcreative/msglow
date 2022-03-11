@@ -158,7 +158,7 @@
 				$harga_jual=$harga_jual-$diskon_pesanan;
 				$this->m_pemesanan_new->save_detail_pesanan($id_pemesan,$harga_jual,$total_untung,$list_barang,$diskon_pesanan,$diskon_barang,$harga_modal);
 				echo $this->session->set_flashdata('msg','success');
-			}elseif(($selisih_waktu>1 && $selisih_jam>=0)  ){
+			}elseif(($selisih_waktu>3 && $selisih_jam>=0)  ){
 				
 				$this->m_pemesanan_new->save_pesanan($nama_pemesan,$tanggal,$no_hp,$alamat,$level,$kurir_id,$at_id,$mp_id,$id_diskon,$uid,$id_pegawai,$id_toko,$id_pemesan);
 				$size = sizeof($barang_id);
