@@ -70,7 +70,7 @@
 
 		function getPemesanan_fix_admin_all($id_toko,$uid){
 			//and pemesanan_tanggal>=DATE_ADD(NOW(), INTERVAL -3 MONTH)
-			$hasil=$this->db->query("SELECT a.*,b.*,c.*,d.*,f.*,e.user_nama,g.nama as nama_toko , h.nama as admin_pemesan,DATE_FORMAT(pemesanan_tanggal,'%d/%m/%Y') AS tanggal FROM pemesanan a, kurir b, asal_transaksi c, metode_pembayaran d, user e, detail_transaksi f, toko g,pegawai h  WHERE a.kurir_id = b.kurir_id AND a.at_id = c.at_id AND a.mp_id = d.mp_id and a.uid=e.user_id and a.pemesanan_id=f.id_pemesanan and a.id_pegawai=h.id_pegawai and a.id_toko=g.id_toko and a.id_toko='$id_toko'   AND a.uid = '$uid' ORDER BY a.pemesanan_id desc ");
+			$hasil=$this->db->query("SELECT a.*,b.*,c.*,d.*,f.*,e.user_nama,g.nama as nama_toko , h.nama as admin_pemesan,DATE_FORMAT(pemesanan_tanggal,'%d/%m/%Y') AS tanggal FROM pemesanan a, kurir b, asal_transaksi c, metode_pembayaran d, user e, detail_transaksi f, toko g,pegawai h  WHERE a.kurir_id = b.kurir_id AND a.at_id = c.at_id AND a.mp_id = d.mp_id and a.uid=e.user_id and a.pemesanan_id=f.id_pemesanan and a.id_pegawai=h.id_pegawai and a.id_toko=g.id_toko and a.id_toko='$id_toko'   AND a.uid = '$uid' ORDER BY a.pemesanan_id desc limit 3000 ");
 			
 			
         	return $hasil;
